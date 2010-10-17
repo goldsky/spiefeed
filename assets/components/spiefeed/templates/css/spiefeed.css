@@ -1,0 +1,28 @@
+.feedRow {
+    position: relative;
+}
+
+.spie-first-row {
+    border-top: 1px solid #ccc;
+}
+
+.spie-row {
+    background-color: #fff;
+    border-bottom: 1px dotted #ccc;
+    padding: 5px;
+}
+
+.spie-odd-row {
+    background-color:#F1EFE2;
+    border-bottom: 1px dotted #ccc;
+    padding: 5px;
+}
+
+.spie-last-row {
+    border-bottom: 1px solid #ccc;
+}
+
+.feedLink img.feedFavicon {
+    margin: 0;
+    padding: 0;
+}
