@@ -59,7 +59,7 @@ class SimplePieModx {
      */
     public function spieModx($spie) {
         $placeholders = $this->setSimplePieModxPlaceholders($spie);
-        if (!$placeholders)
+        if (FALSE === $placeholders)
             return FALSE;
 
         $sortedPlaceholders = $this->sortFeeds($placeholders, $spie['sortBy'], $spie['sortOrder']);
@@ -127,15 +127,16 @@ class SimplePieModx {
              * This always be placed AFTER all the settings above.
              */
             if (!$feed->init()) {
-                $this->modx->log(
-                        modX::LOG_LEVEL_ERROR
-                        , "Error parsing RSS feed at {$setFeedUrl}"
-                        , ''
-                        , 'simplepie'
-                        , __FILE__
-                        , __LINE__
-                );
-                $phArray[$joinKey] = $feed->error();
+//                $this->modx->log(
+//                        modX::LOG_LEVEL_ERROR
+//                        , "Error parsing RSS feed at {$setFeedUrl}"
+//                        , ''
+//                        , 'simplepie'
+//                        , __FILE__
+//                        , __LINE__
+//                );
+                echo $feed->error();
+                return FALSE;
                 continue;
             }
 
@@ -259,12 +260,12 @@ class SimplePieModx {
         foreach ($placehoders as $v) {
             $i++;
 
-            if (0 === $i % 2) {
+            if (intval(0) === $i % 2) {
                 $v['feedClass'] = $tpls['rowCls'];
             } else {
                 $v['feedClass'] = $tpls['oddRowCls'];
             }
-            if (1 === $i) {
+            if (intval(1) === $i) {
                 $v['feedClass'] .= ' ' . $tpls['firstRowCls'];
             } elseif ($i == $countPlacehoders) {
                 $v['feedClass'] .= ' ' . $tpls['lastRowCls'];
