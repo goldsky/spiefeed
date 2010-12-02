@@ -53,7 +53,7 @@ $properties = array(
         'type' => 'textfield',
         'options' => '',
         'value' => 'default-spiefeed.chunk.tpl',
-        'lexicon' => 'spiefeed:default',
+        'lexicon' => 'spiefeed:properties',
     ),
     array(
         'name' => 'tplPath',
@@ -61,7 +61,7 @@ $properties = array(
         'type' => 'textfield',
         'options' => '',
         'value' => MODX_CORE_PATH . 'components/spiefeed/elements/chunks/',
-        'lexicon' => 'spiefeed:default',
+        'lexicon' => 'spiefeed:properties',
     ),
     array(
         'name' => 'css',
@@ -69,7 +69,7 @@ $properties = array(
         'type' => 'textfield',
         'options' => '',
         'value' =>  MODX_ASSETS_URL . 'components/spiefeed/templates/css/spiefeed.css',
-        'lexicon' => 'spiefeed:default',
+        'lexicon' => 'spiefeed:properties',
     ),
     array(
         'name' => 'firstRowCls',
@@ -77,7 +77,7 @@ $properties = array(
         'type' => 'textfield',
         'options' => '',
         'value' =>  'spie-first-row',
-        'lexicon' => 'spiefeed:default',
+        'lexicon' => 'spiefeed:properties',
     ),
     array(
         'name' => 'lastRowCls',
@@ -85,7 +85,7 @@ $properties = array(
         'type' => 'textfield',
         'options' => '',
         'value' =>  'spie-last-row',
-        'lexicon' => 'spiefeed:default',
+        'lexicon' => 'spiefeed:properties',
     ),
     array(
         'name' => 'rowCls',
@@ -93,7 +93,7 @@ $properties = array(
         'type' => 'textfield',
         'options' => '',
         'value' =>  'spie-row',
-        'lexicon' => 'spiefeed:default',
+        'lexicon' => 'spiefeed:properties',
     ),
     array(
         'name' => 'oddRowCls',
@@ -101,7 +101,7 @@ $properties = array(
         'type' => 'textfield',
         'options' => '',
         'value' =>  'spie-odd-row',
-        'lexicon' => 'spiefeed:default',
+        'lexicon' => 'spiefeed:properties',
     ),
 );
 
