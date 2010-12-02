@@ -243,8 +243,10 @@ $spie['sortBy'] = $modx->getOption('sortBy', $scriptProperties, 'date');
 $scriptProperties['sortOrder'] = !empty($scriptProperties['sortOrder']) && strtoupper($scriptProperties['sortOrder']) == 'ASC' ? 'ASC' : 'DESC';
 $spie['sortOrder'] = $modx->getOption('sortOrder', $scriptProperties);
 
-$spie['tpl'] = $modx->getOption('tpl', $scriptProperties, 'defaultSpieFeedTpl');
-$spie['tplFile'] = $modx->getOption('spiefeed.defaultSpieFeedTplPath', $scriptProperties, 'components/spiefeed/elements/tpl/default-spiefeed.tpl');
+$scriptProperties['spiefeed.defaultSpieFeedTpl'] = isset($scriptProperties['tpl']) ? $scriptProperties['tpl'] : null;
+$spie['tpl'] = $modx->getOption('spiefeed.defaultSpieFeedTpl', $scriptProperties, 'defaultSpieFeedTpl');
+$tplPath = $modx->getOption('spiefeed.defaultSpieFeedTplPath');
+$spie['tplFile'] = $modx->getOption('spiefeed.defaultSpieFeedTpl', $scriptProperties, $tplPath . 'default-spiefeed.chunk.tpl');
 $spie['firstRowCls'] = $modx->getOption('firstRowCls', $scriptProperties, 'spie-first-row');
 $spie['lastRowCls'] = $modx->getOption('lastRowCls', $scriptProperties, 'spie-last-row');
 $spie['rowCls'] = $modx->getOption('rowCls', $scriptProperties, 'spie-row');

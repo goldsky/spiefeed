@@ -54,7 +54,7 @@ set_time_limit(0);
 define('PKG_NAME', 'spieFeed');
 define('PKG_NAME_LOWER', 'spiefeed');
 define('PKG_VERSION', '1.0.0');
-define('PKG_RELEASE', 'beta-2');
+define('PKG_RELEASE', 'rc-1');
 
 /* define sources */
 $root = dirname(dirname(__FILE__)) . '/';

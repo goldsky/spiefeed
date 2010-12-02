@@ -30,81 +30,9 @@ $chunks = array();
 $chunks[1]= $modx->newObject('modChunk');
 $chunks[1]->fromArray(array(
     'id' => 1,
-    'name' => 'lgnLoginTpl',
-    'description' => '',
-    'snippet' => file_get_contents($sources['source_core'].'/elements/chunks/lgnlogintpl.chunk.tpl'),
-    'properties' => '',
-),'',true,true);
-
-$chunks[2]= $modx->newObject('modChunk');
-$chunks[2]->fromArray(array(
-    'id' => 2,
-    'name' => 'lgnLogoutTpl',
-    'description' => '',
-    'snippet' => file_get_contents($sources['source_core'].'/elements/chunks/lgnlogouttpl.chunk.tpl'),
-    'properties' => '',
-),'',true,true);
-
-$chunks[3]= $modx->newObject('modChunk');
-$chunks[3]->fromArray(array(
-    'id' => 3,
-    'name' => 'lgnErrTpl',
-    'description' => '',
-    'snippet' => file_get_contents($sources['source_core'].'/elements/chunks/lgnerrtpl.chunk.tpl'),
-    'properties' => '',
-),'',true,true);
-
-$chunks[4]= $modx->newObject('modChunk');
-$chunks[4]->fromArray(array(
-    'id' => 4,
-    'name' => 'lgnForgotPassEmail',
-    'description' => '',
-    'snippet' => file_get_contents($sources['source_core'].'/elements/chunks/lgnforgotpassemail.chunk.tpl'),
-    'properties' => '',
-),'',true,true);
-
-$chunks[5]= $modx->newObject('modChunk');
-$chunks[5]->fromArray(array(
-    'id' => 5,
-    'name' => 'lgnForgotPassSentTpl',
-    'description' => '',
-    'snippet' => file_get_contents($sources['source_core'].'/elements/chunks/lgnforgotpasssenttpl.chunk.tpl'),
-    'properties' => '',
-),'',true,true);
-
-$chunks[6]= $modx->newObject('modChunk');
-$chunks[6]->fromArray(array(
-    'id' => 6,
-    'name' => 'lgnForgotPassTpl',
-    'description' => '',
-    'snippet' => file_get_contents($sources['source_core'].'/elements/chunks/lgnforgotpasstpl.chunk.tpl'),
-    'properties' => '',
-),'',true,true);
-
-$chunks[7]= $modx->newObject('modChunk');
-$chunks[7]->fromArray(array(
-    'id' => 7,
-    'name' => 'lgnResetPassTpl',
-    'description' => '',
-    'snippet' => file_get_contents($sources['source_core'].'/elements/chunks/lgnresetpasstpl.chunk.tpl'),
-    'properties' => '',
-),'',true,true);
-
-$chunks[8]= $modx->newObject('modChunk');
-$chunks[8]->fromArray(array(
-    'id' => 8,
-    'name' => 'lgnRegisterForm',
-    'description' => '',
-    'snippet' => file_get_contents($sources['source_core'].'/elements/chunks/lgnregisterformtpl.chunk.tpl'),
-    'properties' => '',
-),'',true,true);
-
-$chunks[9]= $modx->newObject('modChunk');
-$chunks[9]->fromArray(array(
-    'id' => 9,
-    'name' => 'lgnActivateEmailTpl',
-    'description' => '',
-    'snippet' => file_get_contents($sources['source_core'].'/elements/chunks/lgnactivateemailtpl.chunk.tpl'),
+    'name' => 'defaultSpieFeedTpl',
+    'description' => 'Default template of spiefeed snippet',
+    'snippet' => file_get_contents($sources['source_core'].'/elements/chunks/default-spiefeed.chunk.tpl'),
     'properties' => '',
 ),'',true,true);
 
