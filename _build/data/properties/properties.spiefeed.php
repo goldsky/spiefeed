@@ -53,7 +53,7 @@ $properties = array(
         'type' => 'textfield',
         'options' => '',
         'value' => '{core_path}components/spiefeed/elements/chunks/',
-        'lexicon' => 'spiefeed',
+        'lexicon' => 'spiefeed:properties',
     ),
     array(
         'name' => 'spiefeed.defaultSpieFeedTpl',
@@ -61,7 +61,7 @@ $properties = array(
         'type' => 'textfield',
         'options' => '',
         'value' => 'default-spiefeed.chunk.tpl',
-        'lexicon' => 'spiefeed',
+        'lexicon' => 'spiefeed:properties',
     ),
 );
 

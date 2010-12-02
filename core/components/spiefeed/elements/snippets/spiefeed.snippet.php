@@ -243,14 +243,21 @@ $spie['sortBy'] = $modx->getOption('sortBy', $scriptProperties, 'date');
 $scriptProperties['sortOrder'] = !empty($scriptProperties['sortOrder']) && strtoupper($scriptProperties['sortOrder']) == 'ASC' ? 'ASC' : 'DESC';
 $spie['sortOrder'] = $modx->getOption('sortOrder', $scriptProperties);
 
-$scriptProperties['spiefeed.defaultSpieFeedTpl'] = isset($scriptProperties['tpl']) ? $scriptProperties['tpl'] : null;
+/**
+ * Templates
+ */
+$scriptProperties['spiefeed.defaultSpieFeedTpl'] = !empty($scriptProperties['tpl']) ? $scriptProperties['tpl'] : null;
 $spie['tpl'] = $modx->getOption('spiefeed.defaultSpieFeedTpl', $scriptProperties, 'defaultSpieFeedTpl');
 $tplPath = $modx->getOption('spiefeed.defaultSpieFeedTplPath');
 $spie['tplFile'] = $modx->getOption('spiefeed.defaultSpieFeedTpl', $scriptProperties, $tplPath . 'default-spiefeed.chunk.tpl');
-$spie['firstRowCls'] = $modx->getOption('firstRowCls', $scriptProperties, 'spie-first-row');
-$spie['lastRowCls'] = $modx->getOption('lastRowCls', $scriptProperties, 'spie-last-row');
-$spie['rowCls'] = $modx->getOption('rowCls', $scriptProperties, 'spie-row');
-$spie['oddRowCls'] = $modx->getOption('oddRowCls', $scriptProperties, 'spie-odd-row');
+$scriptProperties['spiefeed.firstRowCls'] = !empty($scriptProperties['firstRowCls']) ? $scriptProperties['firstRowCls'] : null;
+$spie['firstRowCls'] = $modx->getOption('spiefeed.firstRowCls', $scriptProperties, 'spie-first-row');
+$scriptProperties['spiefeed.lastRowCls'] = !empty($scriptProperties['lastRowCls']) ? $scriptProperties['lastRowCls'] : null;
+$spie['lastRowCls'] = $modx->getOption('spiefeed.lastRowCls', $scriptProperties, 'spie-last-row');
+$scriptProperties['spiefeed.rowCls'] = !empty($scriptProperties['rowCls']) ? $scriptProperties['rowCls'] : null;
+$spie['rowCls'] = $modx->getOption('spiefeed.rowCls', $scriptProperties, 'spie-row');
+$scriptProperties['spiefeed.oddRowCls'] = !empty($scriptProperties['oddRowCls']) ? $scriptProperties['oddRowCls'] : null;
+$spie['oddRowCls'] = $modx->getOption('spiefeed.oddRowCls', $scriptProperties, 'spie-odd-row');
 
 // clean up all empty params
 foreach ($spie as $k => $v) {
@@ -286,10 +293,11 @@ if ($output) {
 
 if ($attachHeaders) {
     $defaultCssFile = MODX_ASSETS_URL . 'components/spiefeed/templates/css/spiefeed.css';
-    $spie['css'] = $modx->getOption('css', $scriptProperties, $defaultCssFile);
+    $scriptProperties['spiefeed.oddRowCls'] = !empty($scriptProperties['css']) ? $scriptProperties['css'] : null;
+    $spie['css'] = $modx->getOption('spiefeed.css', $scriptProperties, $defaultCssFile);
     if ($spie['css'] != 'disabled') {
         $modx->regClientCSS($defaultCssFile, 'screen');
     }
 }
 
-echo $output;
+return $output;
