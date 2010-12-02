@@ -59,6 +59,8 @@ if (!defined('MODX_CONNECTORS_PATH'))
     define('MODX_CONNECTORS_PATH', MODX_BASE_PATH . 'connectors/');
 if (!defined('MODX_ASSETS_PATH'))
     define('MODX_ASSETS_PATH', MODX_BASE_PATH . 'assets/');
+if (!defined('MODX_CORE_PATH'))
+    define('MODX_CORE_PATH', MODX_BASE_PATH . 'core/');
 
 /* define version */
 define('PKG_NAME', 'spieFeed');

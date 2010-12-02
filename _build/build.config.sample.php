@@ -41,6 +41,8 @@
 /* define the MODX path constants necessary for core installation */
 if (!defined('MODX_BASE_PATH'))
     define('MODX_BASE_PATH', dirname(dirname(__FILE__)) . '/');
+if (!defined('MODX_CORE_PATH'))
+    define('MODX_CORE_PATH', MODX_BASE_PATH . 'core/');
 if (!defined('MODX_MANAGER_PATH'))
     define('MODX_MANAGER_PATH', MODX_BASE_PATH . 'manager/');
 if (!defined('MODX_CONNECTORS_PATH'))
@@ -48,8 +50,13 @@ if (!defined('MODX_CONNECTORS_PATH'))
 if (!defined('MODX_ASSETS_PATH'))
     define('MODX_ASSETS_PATH', MODX_BASE_PATH . 'assets/');
 
-define('MODX_BASE_URL', '/modx/');
-define('MODX_CORE_URL', MODX_BASE_URL . 'core/');
-define('MODX_MANAGER_URL', MODX_BASE_URL . 'manager/');
-define('MODX_CONNECTORS_URL', MODX_BASE_URL . 'connectors/');
-define('MODX_ASSETS_URL', MODX_BASE_URL . 'assets/');
+if (!defined('MODX_BASE_URL'))
+    define('MODX_BASE_URL', '/modx/');
+if (!defined('MODX_CORE_URL'))
+    define('MODX_CORE_URL', MODX_BASE_URL . 'core/');
+if (!defined('MODX_MANAGER_URL'))
+    define('MODX_MANAGER_URL', MODX_BASE_URL . 'manager/');
+if (!defined('MODX_CONNECTORS_URL'))
+    define('MODX_CONNECTORS_URL', MODX_BASE_URL . 'connectors/');
+if (!defined('MODX_ASSETS_URL'))
+    define('MODX_ASSETS_URL', MODX_BASE_URL . 'assets/');
