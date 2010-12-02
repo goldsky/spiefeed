@@ -146,21 +146,6 @@ $vehicle->resolve('file', array(
 ));
 $builder->putVehicle($vehicle);
 
-/* load system settings */
-$settings = array();
-include_once $sources['data'] . 'transport.settings.php';
-
-$attributes = array(
-    xPDOTransport::UNIQUE_KEY => 'key',
-    xPDOTransport::PRESERVE_KEYS => true,
-    xPDOTransport::UPDATE_OBJECT => false,
-);
-foreach ($settings as $setting) {
-    $vehicle = $builder->createVehicle($setting, $attributes);
-    $builder->putVehicle($vehicle);
-}
-unset($settings, $setting, $attributes);
-
 /* now pack in the license file, readme and setup options */
 $builder->setPackageAttributes(array(
     'license' => file_get_contents($sources['docs'] . 'license.txt'),
