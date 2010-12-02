@@ -1,8 +1,8 @@
 <?php
 
 /**
- * @package login
- * @subpackage build
+ * @package     spiefeed
+ * @subpackage  build
  */
 function getSnippetContent($filename) {
     $o = file_get_contents($filename);

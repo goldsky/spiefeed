@@ -36,13 +36,15 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
+ * @link http://simplepie.org/
+ */
+
+/**
  * @author goldsky <goldsky@modx-id.com>
  * @license http://www.gnu.org/licenses/gpl-3.0.html
  * @package spieFeed
  * @subpackage class
- * @link http://simplepie.org/
  */
-
 class SimplePieModx {
 
     /**
@@ -161,7 +163,7 @@ class SimplePieModx {
 
             $countLimit = 0;
             foreach ($feed->get_items($getItemStart, $getItemEnd) as $item) {
-                
+
                 if (isset($spie['setItemLimit']) && $spie['setItemLimit'] == $countLimit)
                     continue;
 

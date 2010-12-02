@@ -1,6 +1,7 @@
 <?php
 /**
- * @package login
+ * @package spiefeed
+ * @subpackage build
  */
 $settings = array();
 

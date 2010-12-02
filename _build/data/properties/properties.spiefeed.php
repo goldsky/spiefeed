@@ -36,13 +36,13 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @author goldsky <goldsky@modx-id.com>
- * @license http://www.gnu.org/licenses/gpl-3.0.html
  * @link http://simplepie.org/
  */
 /**
  * Default spieFeed snippet properties
  *
+ * @author goldsky <goldsky@modx-id.com>
+ * @license http://www.gnu.org/licenses/gpl-3.0.html
  * @package spieFeed
  * @subpackage build
  */
