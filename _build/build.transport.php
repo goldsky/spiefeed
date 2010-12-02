@@ -50,6 +50,16 @@ $mtime = $mtime[1] + $mtime[0];
 $tstart = $mtime;
 set_time_limit(0);
 
+/* define the MODX path constants necessary for core installation */
+if (!defined('MODX_BASE_PATH'))
+    define('MODX_BASE_PATH', dirname(dirname(__FILE__)) . '/');
+if (!defined('MODX_MANAGER_PATH'))
+    define('MODX_MANAGER_PATH', MODX_BASE_PATH . 'manager/');
+if (!defined('MODX_CONNECTORS_PATH'))
+    define('MODX_CONNECTORS_PATH', MODX_BASE_PATH . 'connectors/');
+if (!defined('MODX_ASSETS_PATH'))
+    define('MODX_ASSETS_PATH', MODX_BASE_PATH . 'assets/');
+
 /* define version */
 define('PKG_NAME', 'spieFeed');
 define('PKG_NAME_LOWER', 'spiefeed');
