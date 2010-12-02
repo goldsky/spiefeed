@@ -1,30 +1,42 @@
 <?php
 
 /**
- * spieFeed is a SimplePie's bridge to MODx Revolution
+ * ******* spieFeed's license. *******
+ * GPLv3
+ * http://www.gnu.org/licenses/gpl-3.0.html
  *
- * This file is part of spieFeed, a feed syndication aggregator component for
- * MODx Revolution, which runs on top of SimplePie's script.
+ * ******* SimplePie's license. *******
+ * BSD
+ * Copyright (c) 2004-2007, Ryan Parman and Geoffrey Sneddon.
+ * All rights reserved.
  *
- * spieFeed is free software; you can redistribute it and/or modify it under the
- * terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
  *
- * spieFeed is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * * Redistributions of source code must retain the above copyright notice, this
+ *   list of conditions and the following disclaimer.
  *
- * SimplePie itself is bonded to its license which can be found on their website
- * here http://simplepie.org/wiki/faq/can_i_include_simplepie_with_software_i_m_selling
- * or the included file LICENSE.txt.
+ * * Redistributions in binary form must reproduce the above copyright notice,
+ *   this list of conditions and the following disclaimer in the documentation
+ *   and/or other materials provided with the distribution.
  *
- * You should have received a copy of the GNU General Public License along with
- * spieFeed; if not, write to the Free Software Foundation, Inc., 59 Temple
- * Place, Suite 330, Boston, MA 02111-1307 USA
+ * * Neither the name of the SimplePie Team nor the names of its contributors
+ *   may be used to endorse or promote products derived from this software
+ *   without specific prior written permission.
  *
- * @copyright Copyright 2010 by goldsky <goldsky@modx-id.com>
- * @version 1.0.0-beta-1
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS AND CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ *
+ * @author goldsky <goldsky@modx-id.com>
  * @license http://www.gnu.org/licenses/gpl-3.0.html
  * @package spieFeed
  * @subpackage snippet
@@ -36,11 +48,12 @@
  * Note that if you've already loaded the raw RSS data, you should use set_raw_data().
  * @link http://simplepie.org/wiki/reference/simplepie/set_feed_url
  */
-$defaultFeedUrl = 'http://feeds.feedburner.com/modx-announce'
+$defaultFeedUrl =
+        'http://feeds.feedburner.com/modx-announce'
         // non latin-1 testing
         . '| http://www.voanews.com/templates/Articles.rss?sectionPath=/russian/news'
 ;
-$spie['feedUrl'] = isset($setFeedUrl) ? $setFeedUrl : $defaultFeedUrl;
+$spie['feedUrl'] = $modx->getOption('feedUrl', $scriptProperties, $defaultFeedUrl);
 if (trim($spie['feedUrl']) == '') {
     return FALSE;
 }
@@ -56,7 +69,7 @@ foreach ($spie['setFeedUrl'] as $k => $v) {
  * @var 0 | 1
  * @link http://simplepie.org/wiki/reference/simplepie/enable_cache
  */
-$spie['enableCache'] = isset($enableCache) ? (int) $enableCache : null;
+$spie['enableCache'] = $modx->getOption('enableCache', $scriptProperties, null);
 
 /**
  * Sometimes feeds don't have their items in chronological order.
@@ -65,13 +78,14 @@ $spie['enableCache'] = isset($enableCache) ? (int) $enableCache : null;
  * chronological order if you don't want it.
  * @link http://simplepie.org/wiki/reference/simplepie/enable_order_by_date;
  */
-$spie['enableOrderByDate'] = isset($enableOrderByDate) && (int) $enableOrderByDate == 0 ? 'false' : null;
+$scriptProperties['enableOrderByDate'] = !empty($scriptProperties['enableOrderByDate']) && $scriptProperties['enableOrderByDate'] == '0' ? 'false' : null;
+$spie['enableOrderByDate'] = $modx->getOption('enableOrderByDate', $scriptProperties, null);
 
 /**
  * Set the minimum time (in seconds) for which a feed will be cached.
  * @link http://simplepie.org/wiki/reference/simplepie/set_cache_duration
  */
-$spie['setCacheDuration'] = isset($setCacheDuration) ? (int) $setCacheDuration : null;
+$spie['setCacheDuration'] = $modx->getOption('setCacheDuration', $scriptProperties, null);
 
 /**
  * Set the file system location (not WWW location) where the cache files should be written.
@@ -79,13 +93,14 @@ $spie['setCacheDuration'] = isset($setCacheDuration) ? (int) $setCacheDuration :
  * @link http://simplepie.org/wiki/reference/simplepie/set_cache_location
  */
 $defaultCacheLocation = $modx->getOption('assets_path') . 'components/spiefeed/cache';
-$spie['setCacheLocation'] = isset($setCacheLocation) ? $setCacheLocation : $defaultCacheLocation;
+$spie['setCacheLocation'] = $modx->getOption('setCacheLocation', $scriptProperties, $defaultCacheLocation);
 
 /**
  * Set the handler to enable the display of cached favicons.
  * @link http://simplepie.org/wiki/reference/simplepie/set_favicon_handler
  */
 $spie['setFaviconHandler'] = array();
+$setFaviconHandler = $modx->getOption('setFaviconHandler', $scriptProperties, null);
 if (!empty($setFaviconHandler)) {
     $spie['setFaviconHandler'] = @explode(',', $setFaviconHandler);
     foreach ($spie['setFaviconHandler'] as $k => $v) {
@@ -101,6 +116,7 @@ if (!empty($setFaviconHandler)) {
  * @link http://simplepie.org/wiki/reference/simplepie/set_image_handler
  */
 $spie['setImageHandler'] = array();
+$setImageHandler = $modx->getOption('setImageHandler', $scriptProperties, null);
 if (!empty($setImageHandler)) {
     $spie['setImageHandler'] = @explode(',', $setImageHandler);
     foreach ($spie['setImageHandler'] as $k => $v) {
@@ -114,14 +130,14 @@ if (!empty($setImageHandler)) {
  * For that, you want to pass $start and $length parameters to get_items()
  * @link http://simplepie.org/wiki/reference/simplepie/set_item_limit
  */
-$spie['setItemLimit'] = isset($setItemLimit) ? (int) $setItemLimit : null;
+$spie['setItemLimit'] = $modx->getOption('setItemLimit', $scriptProperties, null);
 
 /**
  * Set the query string that triggers SimplePie to generate the JavaScript code
  * for embedding media files.
  * @link http://simplepie.org/wiki/reference/simplepie/set_javascript
  */
-$spie['setJavascript'] = isset($setJavascript) ? $setJavascript : null;
+$spie['setJavascript'] = $modx->getOption('setJavascript', $scriptProperties, null);
 
 /**
  * Set which attributes get stripped from an entry's content. <br />
@@ -131,6 +147,7 @@ $spie['setJavascript'] = isset($setJavascript) ? $setJavascript : null;
  * @link http://simplepie.org/wiki/reference/simplepie/strip_attributes
  */
 $spie['stripAttributes'] = array();
+$stripAttributes = $modx->getOption('stripAttributes', $scriptProperties, null);
 if (!empty($stripAttributes)) {
     $spie['stripAttributes'] = @explode(',', $stripAttributes);
     foreach ($spie['stripAttributes'] as $k => $v) {
@@ -142,7 +159,8 @@ if (!empty($stripAttributes)) {
  * Set whether to strip out HTML comments from an entry's content.
  * @link http://simplepie.org/wiki/reference/simplepie/strip_comments
  */
-$spie['stripComments'] = isset($stripComments) && $stripComments == '1' ? 'true' : null;
+$scriptProperties['stripComments'] = !empty($scriptProperties['stripComments']) && $scriptProperties['stripComments'] == '1' ? 'true' : null;
+$spie['stripComments'] = $modx->getOption('stripComments', $scriptProperties, null);
 
 /**
  * Set which HTML tags get stripped from an entry's content. <br />
@@ -152,6 +170,7 @@ $spie['stripComments'] = isset($stripComments) && $stripComments == '1' ? 'true'
  * @link http://simplepie.org/wiki/reference/simplepie/strip_htmltags
  */
 $spie['stripHtmlTags'] = array();
+$stripHtmlTags = $modx->getOption('stripHtmlTags', $scriptProperties, null);
 if (!empty($stripHtmlTags)) {
     $spie['stripHtmlTags'] = @explode(',', $stripHtmlTags);
     foreach ($spie['stripHtmlTags'] as $k => $v) {
@@ -164,7 +183,7 @@ if (!empty($stripHtmlTags)) {
  * Only supports the English language
  * @link http://simplepie.org/wiki/reference/simplepie_item/get_date
  */
-$spie['dateFormat'] = isset($dateFormat) ? $dateFormat : null;
+$spie['dateFormat'] = $modx->getOption('dateFormat', $scriptProperties, null);
 
 /**
  * Returns the date/timestamp of the posting in the localized language.
@@ -173,21 +192,22 @@ $spie['dateFormat'] = isset($dateFormat) ? $dateFormat : null;
  * The available localizations depend on which ones are installed on your web server.
  * @link http://simplepie.org/wiki/reference/simplepie_item/get_local_date
  */
-$spie['localDateFormat'] = isset($localDateFormat) ? $localDateFormat : null;
+$spie['localDateFormat'] = $modx->getOption('localDateFormat', $scriptProperties, null);
 
 /**
  * Returns an array of SimplePie_Item references for each item in the feed, which can be looped through. 
  * @link http://simplepie.org/wiki/reference/simplepie/get_items
  */
-$spie['getItemStart'] = isset($getItemStart) ? $getItemStart : null;
-$spie['getItemEnd'] = isset($getItemEnd) ? $getItemEnd : null;
+$spie['getItemStart'] = $modx->getOption('getItemStart', $scriptProperties, null);
+$spie['getItemEnd'] = $modx->getOption('getItemEnd', $scriptProperties, null);
 
 /**
  * If cURL is available, SimplePie will use it instead of the built-in fsockopen functions for fetching remote feeds.
  * This config option will force SimplePie to use fsockopen even if cURL is installed.
  * @link http://simplepie.org/wiki/reference/simplepie/force_fsockopen
  */
-$spie['forceFSockopen'] = isset($forceFSockopen) && $forceFSockopen == '0' ? 0 : 1;
+$scriptProperties['forceFSockopen'] = !empty($scriptProperties['forceFSockopen']) && $scriptProperties['forceFSockopen'] == '0' ? 0 : 1;
+$spie['forceFSockopen'] = $modx->getOption('forceFSockopen', $scriptProperties, null);
 
 /**
  * Allows you to override the character encoding of the feed.
@@ -200,7 +220,7 @@ $spie['forceFSockopen'] = isset($forceFSockopen) && $forceFSockopen == '0' ? 0 :
  * @link http://simplepie.org/wiki/reference/simplepie/set_input_encoding
  * @link http://simplepie.org/wiki/faq/supported_character_encodings
  */
-$spie['setInputEncoding'] = isset($setInputEncoding) ? $setInputEncoding : null;
+$spie['setInputEncoding'] = $modx->getOption('setInputEncoding', $scriptProperties, null);
 
 /**
  * Allows you to override SimplePie's output to match that of your webpage.
@@ -217,22 +237,22 @@ $spie['setInputEncoding'] = isset($setInputEncoding) ? $setInputEncoding : null;
  * @link http://simplepie.org/wiki/reference/simplepie/set_output_encoding
  * @link http://simplepie.org/wiki/faq/supported_character_encodings
  */
-$spie['setOutputEncoding'] = isset($setOutputEncoding) ? $setOutputEncoding : null;
+$spie['setOutputEncoding'] = $modx->getOption('setOutputEncoding', $scriptProperties, null);
 
-$spie['sortBy'] = isset($sortBy) ? $sortBy : 'date';
-$spie['sortOrder'] = isset($sortOrder) && strtoupper($sortOrder) == 'ASC' ? 'ASC' : 'DESC';
+$spie['sortBy'] = $modx->getOption('sortBy', $scriptProperties, 'date');
+$scriptProperties['sortOrder'] = !empty($scriptProperties['sortOrder']) && strtoupper($scriptProperties['sortOrder']) == 'ASC' ? 'ASC' : 'DESC';
+$spie['sortOrder'] = $modx->getOption('sortOrder', $scriptProperties);
 
-
-$spie['tpl'] = isset($tpl) ? $tpl : 'defaultSpieFeedTpl';
-$spie['tplFile'] = 'assets/components/spiefeed/templates/tpl/default-spiefeed.tpl';
-$spie['firstRowCls'] = isset($firstRowCls) ? $firstRowCls : 'spie-first-row';
-$spie['lastRowCls'] = isset($lastRowCls) ? $lastRowCls : 'spie-last-row';
-$spie['rowCls'] = isset($rowCls) ? $rowCls : 'spie-row';
-$spie['oddRowCls'] = isset($oddRowCls) ? $oddRowCls : 'spie-odd-row';
+$spie['tpl'] = $modx->getOption('tpl', $scriptProperties, 'defaultSpieFeedTpl');
+$spie['tplFile'] = $modx->getOption('spiefeed.defaultSpieFeedTplPath', $scriptProperties, 'components/spiefeed/elements/tpl/default-spiefeed.tpl');
+$spie['firstRowCls'] = $modx->getOption('firstRowCls', $scriptProperties, 'spie-first-row');
+$spie['lastRowCls'] = $modx->getOption('lastRowCls', $scriptProperties, 'spie-last-row');
+$spie['rowCls'] = $modx->getOption('rowCls', $scriptProperties, 'spie-row');
+$spie['oddRowCls'] = $modx->getOption('oddRowCls', $scriptProperties, 'spie-odd-row');
 
 // clean up all empty params
 foreach ($spie as $k => $v) {
-    if (($spie[$k]) == '' || empty($spie[$k]))
+    if (trim($spie[$k]) == '' || empty($spie[$k]))
         unset($spie[$k]);
 }
 
@@ -264,7 +284,7 @@ if ($output) {
 
 if ($attachHeaders) {
     $defaultCssFile = MODX_ASSETS_URL . 'components/spiefeed/templates/css/spiefeed.css';
-    $spie['css'] = isset($css) ? $css : $defaultCssFile;
+    $spie['css'] = $modx->getOption('css', $scriptProperties, $defaultCssFile);
     if ($spie['css'] != 'disabled') {
         $modx->regClientCSS($defaultCssFile, 'screen');
     }
