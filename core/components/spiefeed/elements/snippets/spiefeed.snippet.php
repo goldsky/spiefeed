@@ -53,12 +53,12 @@ $defaultFeedUrl =
         // non latin-1 testing
         . '| http://www.voanews.com/templates/Articles.rss?sectionPath=/russian/news'
 ;
-$spie['feedUrl'] = $modx->getOption('feedUrl', $scriptProperties, $defaultFeedUrl);
-if (trim($spie['feedUrl']) == '') {
+$spie['setFeedUrl'] = $modx->getOption('setFeedUrl', $scriptProperties, $defaultFeedUrl);
+if (trim($spie['setFeedUrl']) == '') {
     return FALSE;
 }
 
-$spie['setFeedUrl'] = @explode('|', $spie['feedUrl']);
+$spie['setFeedUrl'] = @explode('|', $spie['setFeedUrl']);
 foreach ($spie['setFeedUrl'] as $k => $v) {
     $spie['setFeedUrl'][$k] = trim($v);
 }
