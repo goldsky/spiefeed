@@ -14,6 +14,9 @@
       Link : [[+authorLink]]<br />
       Email : [[+authorEmail]]
     </div>
+    <div class="feedDescription">
+      Contributor: [[+description]]
+    </div>
     <div class="feedContributor">
       Contributor: [[+contributor]]
     </div>
