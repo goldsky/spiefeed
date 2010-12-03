@@ -31,7 +31,7 @@ $chunks[1]= $modx->newObject('modChunk');
 $chunks[1]->fromArray(array(
     'id' => 1,
     'name' => 'defaultSpieFeedTpl',
-    'description' => 'Default template of spiefeed snippet',
+    'description' => 'Default template chunk of spiefeed snippet',
     'snippet' => file_get_contents($sources['source_core'].'/elements/chunks/default-spiefeed.chunk.tpl'),
     'properties' => '',
 ),'',true,true);

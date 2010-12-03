@@ -52,7 +52,7 @@ $properties = array(
         'desc' => 'spiefeed.tpl',
         'type' => 'textfield',
         'options' => '',
-        'value' => 'default-spiefeed.chunk.tpl',
+        'value' => 'defaultSpieFeedTpl',
         'lexicon' => 'spiefeed:properties',
     ),
     array(
@@ -61,6 +61,14 @@ $properties = array(
         'type' => 'textfield',
         'options' => '',
         'value' => MODX_CORE_PATH . 'components/spiefeed/elements/chunks/',
+        'lexicon' => 'spiefeed:properties',
+    ),
+    array(
+        'name' => 'tplFile',
+        'desc' => 'spiefeed.tplFile',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => 'default-spiefeed.chunk.tpl',
         'lexicon' => 'spiefeed:properties',
     ),
     array(
