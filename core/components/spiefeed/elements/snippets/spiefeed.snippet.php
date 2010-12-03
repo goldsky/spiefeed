@@ -195,7 +195,7 @@ $spie['dateFormat'] = $modx->getOption('dateFormat', $scriptProperties, null);
 $spie['localDateFormat'] = $modx->getOption('localDateFormat', $scriptProperties, null);
 
 /**
- * Returns an array of SimplePie_Item references for each item in the feed, which can be looped through. 
+ * Returns an array of SimplePie_Item references for each item in the feed, which can be looped through.
  * @link http://simplepie.org/wiki/reference/simplepie/get_items
  */
 $spie['getItemStart'] = $modx->getOption('getItemStart', $scriptProperties, null);
@@ -248,7 +248,8 @@ $spie['sortOrder'] = $modx->getOption('sortOrder', $scriptProperties);
  */
 $spie['tpl'] = $modx->getOption('tpl', $scriptProperties);
 $spie['tplPath'] = $modx->getOption('tplPath', $scriptProperties);
-$spie['tplFile'] = $modx->getOption('tplFile', $scriptProperties, $spie['tplPath'] . $spie['tpl']);
+$spie['tplFile'] = $modx->getOption('tplFile', $scriptProperties);
+$spie['tplFilePath'] = $spie['tplPath'] . $spie['tplFile'];
 $spie['firstRowCls'] = $modx->getOption('firstRowCls', $scriptProperties);
 $spie['lastRowCls'] = $modx->getOption('lastRowCls', $scriptProperties);
 $spie['rowCls'] = $modx->getOption('rowCls', $scriptProperties);

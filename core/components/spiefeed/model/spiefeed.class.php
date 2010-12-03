@@ -72,7 +72,7 @@ class SimplePieModx {
      * @return string   final output
      */
     public function spieModx($spie) {
-        $placeholders = $this->setSimplePieModxPlaceholders($spie);
+        $placeholders = $this->_setSimplePieModxPlaceholders($spie);
         if (FALSE === $placeholders)
             return FALSE;
 
@@ -85,7 +85,7 @@ class SimplePieModx {
      * @param string    $spie   snippet parameters
      * @return array    placeholders
      */
-    public function setSimplePieModxPlaceholders($spie) {
+    private function _setSimplePieModxPlaceholders($spie) {
         /**
          * @link http://github.com/simplepie/simplepie/tree/one-dot-two
          */
@@ -141,17 +141,8 @@ class SimplePieModx {
              * This always be placed AFTER all the settings above.
              */
             if (!$feed->init()) {
-//                $this->modx->log(
-//                        modX::LOG_LEVEL_ERROR
-//                        , "Error parsing RSS feed at {$setFeedUrl}"
-//                        , ''
-//                        , 'simplepie'
-//                        , __FILE__
-//                        , __LINE__
-//                );
                 echo $feed->error();
                 return FALSE;
-                continue;
             }
 
             $countItems = count($feed->get_items());
@@ -170,6 +161,7 @@ class SimplePieModx {
                 $phArray[$joinKey]['favicon'] = $feed->get_favicon();
                 $phArray[$joinKey]['link'] = $item->get_link();
                 $phArray[$joinKey]['title'] = $item->get_title();
+                $phArray[$joinKey]['description'] = $item->get_description();
 
                 $phArray[$joinKey]['permalink'] = $item->get_permalink();
                 $parsedUrl = parse_url($phArray[$joinKey]['permalink']);
@@ -209,10 +201,9 @@ class SimplePieModx {
                 }
 
                 $contributor = $item->get_contributor();
+                $phArray[$joinKey]['contributor'] = '';
                 if ($contributor) {
                     $phArray[$joinKey]['contributor'] = $contributor->get_name();
-                } else {
-                    $phArray[$joinKey]['contributor'] = '';
                 }
 
                 if ($feed->get_type() & SIMPLEPIE_TYPE_NONE) {
@@ -286,10 +277,10 @@ class SimplePieModx {
             }
 
             $getChunk = $this->modx->getChunk($tpls['tpl']);
-            if ($getChunk != '') {
+            if (!empty($getChunk)) {
                 $output .= $this->modx->getChunk($tpls['tpl'], $v);
             } else {
-                $output .= $this->_fetchTplFile('defaultSpieFeedTpl', $tpls['tplFile'], $v);
+                $output .= $this->_fetchTplFile('tpl', $tpls['tplFilePath'], $v);
             }
         }
         return $output;
