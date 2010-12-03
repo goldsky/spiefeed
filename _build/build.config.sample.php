@@ -51,7 +51,7 @@ if (!defined('MODX_ASSETS_PATH'))
     define('MODX_ASSETS_PATH', MODX_BASE_PATH . 'assets/');
 
 if (!defined('MODX_BASE_URL'))
-    define('MODX_BASE_URL', 'http://' . $_SERVER['SERVER_NAME'] . '/');
+    define('MODX_BASE_URL', '');
 if (!defined('MODX_CORE_URL'))
     define('MODX_CORE_URL', MODX_BASE_URL . 'core/');
 if (!defined('MODX_MANAGER_URL'))
