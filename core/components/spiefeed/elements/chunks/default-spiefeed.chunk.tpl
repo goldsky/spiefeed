@@ -15,7 +15,7 @@
       Email : [[+authorEmail]]
     </div>
     <div class="feedDescription">
-      Contributor: [[+description]]
+      Description: [[+description]]
     </div>
     <div class="feedContributor">
       Contributor: [[+contributor]]
