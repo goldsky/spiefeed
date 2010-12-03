@@ -162,6 +162,7 @@ class SimplePieModx {
                 $phArray[$joinKey]['link'] = $item->get_link();
                 $phArray[$joinKey]['title'] = $item->get_title();
                 $phArray[$joinKey]['description'] = $item->get_description();
+                $phArray[$joinKey]['content'] = $item->get_content();
 
                 $phArray[$joinKey]['permalink'] = $item->get_permalink();
                 $parsedUrl = parse_url($phArray[$joinKey]['permalink']);

@@ -17,6 +17,9 @@
     <div class="feedDescription">
       Description: [[+description]]
     </div>
+    <div class="feedContent">
+      Full content: [[+content]]
+    </div>
     <div class="feedContributor">
       Contributor: [[+contributor]]
     </div>

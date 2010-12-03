@@ -283,15 +283,14 @@ echo $simplePieModx->spieModx($spie);
 $output = ob_get_contents();
 ob_end_clean();
 
-if ($output) {
+if (!empty($output)) {
     $attachHeaders = TRUE;
 }
 
 if ($attachHeaders) {
     $spie['css'] = $modx->getOption('css', $scriptProperties);
     if ($spie['css'] != 'disabled') {
-        $modx->regClientCSS($defaultCssFile, 'screen');
+        $modx->regClientCSS($spie['css'], 'screen');
     }
 }
-
 return $output;
