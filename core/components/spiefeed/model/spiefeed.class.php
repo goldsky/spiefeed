@@ -60,9 +60,8 @@ class SimplePieModx {
      * Initiating MODx's object inside the class
      * @param mixed $modx  MODx's object
      */
-    public function __construct(&$modx, $spie) {
+    public function __construct(&$modx) {
         $this->modx = & $modx;
-        $this->spie = $spie;
     }
 
     /**
@@ -76,7 +75,7 @@ class SimplePieModx {
         if (FALSE === $placeholders)
             return FALSE;
 
-        $sortedPlaceholders = $this->sortFeeds($placeholders, $spie['sortBy'], $spie['sortOrder']);
+        $sortedPlaceholders = $this->_sortFeeds($placeholders, $spie['sortBy'], $spie['sortOrder']);
         return $this->fetchTpl($sortedPlaceholders, $spie);
     }
 
@@ -175,8 +174,8 @@ class SimplePieModx {
                 $phArray[$joinKey]['imageWidth'] = $feed->get_image_width();
                 $phArray[$joinKey]['imageHeight'] = $feed->get_image_height();
 
-                $phArray[$joinKey]['date'] = $item->get_date($dateFormat);
-                $phArray[$joinKey]['localDate'] = $item->get_local_date($localDateFormat);
+                $phArray[$joinKey]['date'] = $item->get_date($spie['dateFormat']);
+                $phArray[$joinKey]['localDate'] = $item->get_local_date($spie['localDateFormat']);
                 $phArray[$joinKey]['copyright'] = $item->get_copyright();
 
                 $phArray[$joinKey]['latitude'] = $feed->get_latitude();
@@ -230,7 +229,7 @@ class SimplePieModx {
      * to adjust multiple feeds.
      * @link http://simplepie.org/wiki/reference/simplepie/enable_order_by_date
      */
-    public function sortFeeds($feeds, $sortBy, $sortOrder) {
+    private function _sortFeeds($feeds, $sortBy, $sortOrder) {
         foreach ($feeds as $k => $v) {
             if ('date' == strtolower($sortBy)) {
                 $sortByArray[strtotime($v['date'])] = $v;

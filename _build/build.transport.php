@@ -66,7 +66,7 @@ if (!defined('MODX_CORE_PATH'))
 define('PKG_NAME', 'spieFeed');
 define('PKG_NAME_LOWER', 'spiefeed');
 define('PKG_VERSION', '1.0.0');
-define('PKG_RELEASE', 'rc1');
+define('PKG_RELEASE', 'rc2');
 
 /* define sources */
 $root = dirname(dirname(__FILE__)) . '/';

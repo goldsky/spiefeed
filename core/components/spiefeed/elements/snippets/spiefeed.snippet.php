@@ -69,7 +69,7 @@ foreach ($spie['setFeedUrl'] as $k => $v) {
  * @var 0 | 1
  * @link http://simplepie.org/wiki/reference/simplepie/enable_cache
  */
-$spie['enableCache'] = $modx->getOption('enableCache', $scriptProperties, null);
+$spie['enableCache'] = $modx->getOption('enableCache', $scriptProperties);
 
 /**
  * Sometimes feeds don't have their items in chronological order.
@@ -79,13 +79,13 @@ $spie['enableCache'] = $modx->getOption('enableCache', $scriptProperties, null);
  * @link http://simplepie.org/wiki/reference/simplepie/enable_order_by_date;
  */
 $scriptProperties['enableOrderByDate'] = !empty($scriptProperties['enableOrderByDate']) && $scriptProperties['enableOrderByDate'] == '0' ? 'false' : null;
-$spie['enableOrderByDate'] = $modx->getOption('enableOrderByDate', $scriptProperties, null);
+$spie['enableOrderByDate'] = $modx->getOption('enableOrderByDate', $scriptProperties);
 
 /**
  * Set the minimum time (in seconds) for which a feed will be cached.
  * @link http://simplepie.org/wiki/reference/simplepie/set_cache_duration
  */
-$spie['setCacheDuration'] = $modx->getOption('setCacheDuration', $scriptProperties, null);
+$spie['setCacheDuration'] = $modx->getOption('setCacheDuration', $scriptProperties);
 
 /**
  * Set the file system location (not WWW location) where the cache files should be written.
@@ -100,7 +100,7 @@ $spie['setCacheLocation'] = $modx->getOption('setCacheLocation', $scriptProperti
  * @link http://simplepie.org/wiki/reference/simplepie/set_favicon_handler
  */
 $spie['setFaviconHandler'] = array();
-$setFaviconHandler = $modx->getOption('setFaviconHandler', $scriptProperties, null);
+$setFaviconHandler = $modx->getOption('setFaviconHandler', $scriptProperties);
 if (!empty($setFaviconHandler)) {
     $spie['setFaviconHandler'] = @explode(',', $setFaviconHandler);
     foreach ($spie['setFaviconHandler'] as $k => $v) {
@@ -116,7 +116,7 @@ if (!empty($setFaviconHandler)) {
  * @link http://simplepie.org/wiki/reference/simplepie/set_image_handler
  */
 $spie['setImageHandler'] = array();
-$setImageHandler = $modx->getOption('setImageHandler', $scriptProperties, null);
+$setImageHandler = $modx->getOption('setImageHandler', $scriptProperties);
 if (!empty($setImageHandler)) {
     $spie['setImageHandler'] = @explode(',', $setImageHandler);
     foreach ($spie['setImageHandler'] as $k => $v) {
@@ -130,14 +130,14 @@ if (!empty($setImageHandler)) {
  * For that, you want to pass $start and $length parameters to get_items()
  * @link http://simplepie.org/wiki/reference/simplepie/set_item_limit
  */
-$spie['setItemLimit'] = $modx->getOption('setItemLimit', $scriptProperties, null);
+$spie['setItemLimit'] = $modx->getOption('setItemLimit', $scriptProperties);
 
 /**
  * Set the query string that triggers SimplePie to generate the JavaScript code
  * for embedding media files.
  * @link http://simplepie.org/wiki/reference/simplepie/set_javascript
  */
-$spie['setJavascript'] = $modx->getOption('setJavascript', $scriptProperties, null);
+$spie['setJavascript'] = $modx->getOption('setJavascript', $scriptProperties);
 
 /**
  * Set which attributes get stripped from an entry's content. <br />
@@ -147,7 +147,7 @@ $spie['setJavascript'] = $modx->getOption('setJavascript', $scriptProperties, nu
  * @link http://simplepie.org/wiki/reference/simplepie/strip_attributes
  */
 $spie['stripAttributes'] = array();
-$stripAttributes = $modx->getOption('stripAttributes', $scriptProperties, null);
+$stripAttributes = $modx->getOption('stripAttributes', $scriptProperties);
 if (!empty($stripAttributes)) {
     $spie['stripAttributes'] = @explode(',', $stripAttributes);
     foreach ($spie['stripAttributes'] as $k => $v) {
@@ -160,7 +160,7 @@ if (!empty($stripAttributes)) {
  * @link http://simplepie.org/wiki/reference/simplepie/strip_comments
  */
 $scriptProperties['stripComments'] = !empty($scriptProperties['stripComments']) && $scriptProperties['stripComments'] == '1' ? 'true' : null;
-$spie['stripComments'] = $modx->getOption('stripComments', $scriptProperties, null);
+$spie['stripComments'] = $modx->getOption('stripComments', $scriptProperties);
 
 /**
  * Set which HTML tags get stripped from an entry's content. <br />
@@ -170,7 +170,7 @@ $spie['stripComments'] = $modx->getOption('stripComments', $scriptProperties, nu
  * @link http://simplepie.org/wiki/reference/simplepie/strip_htmltags
  */
 $spie['stripHtmlTags'] = array();
-$stripHtmlTags = $modx->getOption('stripHtmlTags', $scriptProperties, null);
+$stripHtmlTags = $modx->getOption('stripHtmlTags', $scriptProperties);
 if (!empty($stripHtmlTags)) {
     $spie['stripHtmlTags'] = @explode(',', $stripHtmlTags);
     foreach ($spie['stripHtmlTags'] as $k => $v) {
@@ -183,7 +183,7 @@ if (!empty($stripHtmlTags)) {
  * Only supports the English language
  * @link http://simplepie.org/wiki/reference/simplepie_item/get_date
  */
-$spie['dateFormat'] = $modx->getOption('dateFormat', $scriptProperties, null);
+$spie['dateFormat'] = $modx->getOption('dateFormat', $scriptProperties);
 
 /**
  * Returns the date/timestamp of the posting in the localized language.
@@ -192,14 +192,14 @@ $spie['dateFormat'] = $modx->getOption('dateFormat', $scriptProperties, null);
  * The available localizations depend on which ones are installed on your web server.
  * @link http://simplepie.org/wiki/reference/simplepie_item/get_local_date
  */
-$spie['localDateFormat'] = $modx->getOption('localDateFormat', $scriptProperties, null);
+$spie['localDateFormat'] = $modx->getOption('localDateFormat', $scriptProperties);
 
 /**
  * Returns an array of SimplePie_Item references for each item in the feed, which can be looped through.
  * @link http://simplepie.org/wiki/reference/simplepie/get_items
  */
-$spie['getItemStart'] = $modx->getOption('getItemStart', $scriptProperties, null);
-$spie['getItemEnd'] = $modx->getOption('getItemEnd', $scriptProperties, null);
+$spie['getItemStart'] = $modx->getOption('getItemStart', $scriptProperties);
+$spie['getItemEnd'] = $modx->getOption('getItemEnd', $scriptProperties);
 
 /**
  * If cURL is available, SimplePie will use it instead of the built-in fsockopen functions for fetching remote feeds.
@@ -207,7 +207,7 @@ $spie['getItemEnd'] = $modx->getOption('getItemEnd', $scriptProperties, null);
  * @link http://simplepie.org/wiki/reference/simplepie/force_fsockopen
  */
 $scriptProperties['forceFSockopen'] = !empty($scriptProperties['forceFSockopen']) && $scriptProperties['forceFSockopen'] == '0' ? 0 : 1;
-$spie['forceFSockopen'] = $modx->getOption('forceFSockopen', $scriptProperties, null);
+$spie['forceFSockopen'] = $modx->getOption('forceFSockopen', $scriptProperties);
 
 /**
  * Allows you to override the character encoding of the feed.
@@ -220,7 +220,7 @@ $spie['forceFSockopen'] = $modx->getOption('forceFSockopen', $scriptProperties, 
  * @link http://simplepie.org/wiki/reference/simplepie/set_input_encoding
  * @link http://simplepie.org/wiki/faq/supported_character_encodings
  */
-$spie['setInputEncoding'] = $modx->getOption('setInputEncoding', $scriptProperties, null);
+$spie['setInputEncoding'] = $modx->getOption('setInputEncoding', $scriptProperties);
 
 /**
  * Allows you to override SimplePie's output to match that of your webpage.
@@ -237,7 +237,7 @@ $spie['setInputEncoding'] = $modx->getOption('setInputEncoding', $scriptProperti
  * @link http://simplepie.org/wiki/reference/simplepie/set_output_encoding
  * @link http://simplepie.org/wiki/faq/supported_character_encodings
  */
-$spie['setOutputEncoding'] = $modx->getOption('setOutputEncoding', $scriptProperties, null);
+$spie['setOutputEncoding'] = $modx->getOption('setOutputEncoding', $scriptProperties);
 
 $spie['sortBy'] = $modx->getOption('sortBy', $scriptProperties, 'date');
 $scriptProperties['sortOrder'] = !empty($scriptProperties['sortOrder']) && strtoupper($scriptProperties['sortOrder']) == 'ASC' ? 'ASC' : 'DESC';
@@ -257,7 +257,7 @@ $spie['oddRowCls'] = $modx->getOption('oddRowCls', $scriptProperties);
 
 // clean up all empty params
 foreach ($spie as $k => $v) {
-    if (trim($spie[$k]) == '' || empty($spie[$k]))
+    if (trim($spie[$k]) == '' || (is_array($spie[$k]) && empty($v)))
         unset($spie[$k]);
 }
 
@@ -278,7 +278,7 @@ if (!class_exists('SimplePieModx')) {
 }
 
 ob_start();
-$simplePieModx = new SimplePieModx($modx, $spie);
+$simplePieModx = new SimplePieModx($modx);
 echo $simplePieModx->spieModx($spie);
 $output = ob_get_contents();
 ob_end_clean();
