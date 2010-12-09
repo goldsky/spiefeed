@@ -288,7 +288,7 @@ if (!empty($output)) {
 }
 
 if ($attachHeaders) {
-    $spie['css'] = MODX_BASE_URL . $modx->getOption('css', $scriptProperties);
+    $spie['css'] = $modx->getOption('css', $scriptProperties);
     if ($spie['css'] != 'disabled') {
         $modx->regClientCSS($spie['css'], 'screen');
     }
