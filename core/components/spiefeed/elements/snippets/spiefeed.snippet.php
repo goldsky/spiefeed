@@ -247,7 +247,7 @@ $spie['sortOrder'] = $modx->getOption('sortOrder', $scriptProperties);
  * Templates
  */
 $spie['tpl'] = $modx->getOption('tpl', $scriptProperties);
-$spie['tplPath'] = $modx->getOption('tplPath', $scriptProperties);
+$spie['tplPath'] = MODX_BASE_PATH . $modx->getOption('tplPath', $scriptProperties);
 $spie['tplFile'] = $modx->getOption('tplFile', $scriptProperties);
 $spie['tplFilePath'] = $spie['tplPath'] . $spie['tplFile'];
 $spie['firstRowCls'] = $modx->getOption('firstRowCls', $scriptProperties);
@@ -288,7 +288,7 @@ if (!empty($output)) {
 }
 
 if ($attachHeaders) {
-    $spie['css'] = $modx->getOption('css', $scriptProperties);
+    $spie['css'] = MODX_BASE_URL . $modx->getOption('css', $scriptProperties);
     if ($spie['css'] != 'disabled') {
         $modx->regClientCSS($spie['css'], 'screen');
     }

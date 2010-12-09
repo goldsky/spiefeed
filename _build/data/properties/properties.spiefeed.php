@@ -60,7 +60,7 @@ $properties = array(
         'desc' => 'spiefeed.tplPath',
         'type' => 'textfield',
         'options' => '',
-        'value' => MODX_CORE_PATH . 'components/spiefeed/elements/chunks/',
+        'value' => 'core/components/spiefeed/elements/chunks/',
         'lexicon' => 'spiefeed:properties',
     ),
     array(
@@ -76,7 +76,7 @@ $properties = array(
         'desc' => 'spiefeed.css',
         'type' => 'textfield',
         'options' => '',
-        'value' =>  MODX_ASSETS_URL . 'components/spiefeed/templates/css/spiefeed.css',
+        'value' =>  'assets/components/spiefeed/templates/css/spiefeed.css',
         'lexicon' => 'spiefeed:properties',
     ),
     array(

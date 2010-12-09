@@ -1,0 +1,5 @@
+1.0.0-pl
+* Switch the snippet's path as the MODX_CORE_PATH to fit the out-of-web-root core folder.
+
+Fixed issues
+* [#1] default tplPath is set to D:\localhost\modx-revo-spiefeed/core/components/spiefeed/elements/chunks/
