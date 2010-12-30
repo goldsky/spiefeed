@@ -220,7 +220,7 @@ class SimplePieModx {
                 $joinKey++;
             } // foreach ($feed->get_items($getItemStart, $getItemEnd) as $item)
         } // foreach ($spie['setFeedUrl'] as $setFeedUrl)
-        return $phArray;
+        return $this->_filterModxTags($phArray);
     }
 
     /**
@@ -299,6 +299,24 @@ class SimplePieModx {
             return $chunk->process($params);
         }
         return FALSE;
+    }
+
+    private function _filterModxTags($sources=array(), array $filters= array()) {
+        if (empty($filters)) {
+            $filters = array(
+                '[[' => '&#91;&#91;',
+                ']]' => '&#93;&#93;'
+            );
+        }
+
+        $countSources = count($sources);
+        for ($i = 0; $i < $countSources; $i++) {
+            foreach ($filters as $search => $replace) {
+                $sources[$i] = str_replace($search, $replace, $sources[$i]);
+            }
+        }
+
+        return $sources;
     }
 
 }
