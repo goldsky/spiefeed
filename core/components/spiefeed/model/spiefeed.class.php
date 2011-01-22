@@ -197,7 +197,7 @@ class SimplePieModx {
 
                 $category = $item->get_category();
                 if ($category) {
-                    $phArray[$joinKey]['category'] = $category->get_label();
+                    $phArray[$joinKey]['category'] = htmlspecialchars_decode($category->get_label(), ENT_QUOTES);
                 }
 
                 $contributor = $item->get_contributor();

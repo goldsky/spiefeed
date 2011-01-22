@@ -1,3 +1,6 @@
+1.1-pl
+* fixed the html decoding on the category
+
 1.1-rc1
 * Added the filter for MODx tags to replace them with HTML ASCII
 
