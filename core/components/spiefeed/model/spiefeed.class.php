@@ -215,6 +215,14 @@ class SimplePieModx {
                 } elseif ($feed->get_type() & SIMPLEPIE_TYPE_ALL) {
                     $phArray[$joinKey]['getType'] = 'Supported';
                 }
+				
+				// Media from Flickr RSS stream
+				if ($enclosure = $item->get_enclosure()) {
+						$phArray[$joinKey]['itemImageThumbnailUrl'] = $enclosure->get_thumbnail();
+						$phArray[$joinKey]['itemImageWidth'] = $enclosure->get_width();
+						$phArray[$joinKey]['itemImageHeight'] = $enclosure->get_height();
+				}
+				
 
                 $countLimit++;
                 $joinKey++;
