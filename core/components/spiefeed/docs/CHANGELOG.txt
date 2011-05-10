@@ -1,3 +1,8 @@
+1.2-pl
+* fixed the multiple feeds
+* added new placeholders: itemImageThumbnailUrl, itemImageWidth, itemImageHeight
+* fixed the getItemStart and getItemLength parameters
+
 1.1-pl
 * fixed the html decoding on the category
 
