@@ -130,7 +130,7 @@ if (!empty($setImageHandler)) {
  * For that, you want to pass $start and $length parameters to get_items()
  * @link http://simplepie.org/wiki/reference/simplepie/set_item_limit
  */
-$spie['setItemLimit'] = $modx->getOption('setItemLimit', $scriptProperties);
+$spie['setItemLimit'] = (int) $modx->getOption('setItemLimit', $scriptProperties);
 
 /**
  * Set the query string that triggers SimplePie to generate the JavaScript code
@@ -199,7 +199,7 @@ $spie['localDateFormat'] = $modx->getOption('localDateFormat', $scriptProperties
  * @link http://simplepie.org/wiki/reference/simplepie/get_items
  */
 $spie['getItemStart'] = $modx->getOption('getItemStart', $scriptProperties);
-$spie['getItemEnd'] = $modx->getOption('getItemEnd', $scriptProperties);
+$spie['getItemLength'] = $modx->getOption('getItemLength', $scriptProperties);
 
 /**
  * If cURL is available, SimplePie will use it instead of the built-in fsockopen functions for fetching remote feeds.

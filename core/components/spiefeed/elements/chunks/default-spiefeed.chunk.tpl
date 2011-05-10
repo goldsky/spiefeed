@@ -50,5 +50,14 @@
     <div class="feedGetType">
       Feed type: [[+getType]]
     </div>
+    <div class="feedImageThumbnailUrl">
+      itemImageThumbnailUrl: [[+itemImageThumbnailUrl]]
+    </div>
+    <div class="feedImageWidth">
+      itemImageWidth: [[+itemImageWidth]] px
+    </div>
+    <div class="feedImageHeight">
+      itemImageHeight: [[+itemImageHeight]] px
+    </div>
 </div>
 
