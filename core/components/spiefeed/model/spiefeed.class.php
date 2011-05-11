@@ -60,208 +60,207 @@ class SimplePieModx {
      * Initiating MODx's object inside the class
      * @param mixed $modx  MODx's object
      */
-    public function __construct(&$modx) {
+    public function __construct(&$modx, $spie) {
         $this->modx = & $modx;
+        $this->spie = $spie;
     }
 
     /**
      * Essambles the parameters to be sorted into the placeholders and
      * returns them inside a template.
-     * @param string    $spie   snippet parameters
      * @return string   final output
      */
-    public function spieModx($spie) {
-        $placeholders = $this->_setSimplePieModxPlaceholders($spie);
+    public function spieModx() {
+        $placeholders = $this->_setSimplePieModxPlaceholders();
         if (FALSE === $placeholders)
             return FALSE;
 
-        $countPlaceholders = count($placeholders);
-        $sortedPlaceholders = $this->_sortFeeds($placeholders, $spie['sortBy'], $spie['sortOrder']);
-
-        return $this->fetchTpl($sortedPlaceholders, $spie);
+        $sortedPlaceholders = $this->_sortFeeds($placeholders);
+        return $this->fetchTpl($sortedPlaceholders);
     }
 
     /**
      * Processing the parameters into placeholders
-     * @param string    $spie   snippet parameters
      * @return array    placeholders
      */
-    private function _setSimplePieModxPlaceholders($spie) {
+    private function _setSimplePieModxPlaceholders() {
         /**
          * @link http://github.com/simplepie/simplepie/tree/one-dot-two
          */
-        if (!file_exists($spie['simplePieClassFile'])) {
-            return 'File ' . $spie['simplePieClassFile'] . ' does not exist.';
+        if (!file_exists($this->spie['simplePieClassFile'])) {
+            return 'File ' . $this->spie['simplePieClassFile'] . ' does not exist.';
         }
-        include_once $spie['simplePieClassFile'];
+        include_once $this->spie['simplePieClassFile'];
         $feed = new SimplePie();
-        $feed->set_cache_location($spie['setCacheLocation']);
-        $feed->set_feed_url($spie['setFeedUrl']);
-
-        if (isset($spie['setInputEncoding'])) {
-            $feed->set_input_encoding($spie['setInputEncoding']);
-        }
-        if (isset($spie['setOutputEncoding'])) {
-            $feed->set_output_encoding($spie['setOutputEncoding']);
-        }
-        // if no cURL, try fsockopen
-        if (isset($spie['forceFSockopen'])) {
-            $feed->force_fsockopen(true);
-        }
-        if (isset($spie['enableCache']))
-            $feed->enable_cache($spie['enableCache']);
-        if (isset($spie['enableOrderByDate']))
-            $feed->enable_order_by_date($spie['enableOrderByDate']);
-        if (isset($spie['setCacheDuration']))
-            $feed->set_cache_duration($spie['setCacheDuration']);
-        if (!empty($spie['setFaviconHandler']))
-            $feed->set_favicon_handler($spie['setFaviconHandler'][0], $spie['setFaviconHandler'][1]);
-        if (!empty($spie['setImageHandler'])) {
-            // handler_image.php?image=67d5fa9a87bad230fb03ea68b9f71090
-            $feed->set_image_handler($spie['setImageHandler'][0], $spie['setImageHandler'][1]);
-        }
-
-        if (isset($spie['setItemLimit']))
-            $feed->set_item_limit((int) $spie['setItemLimit']);
-        if (isset($spie['setJavascript']))
-            $feed->set_javascript($spie['setJavascript']);
-        if (isset($spie['stripAttributes']))
-            $feed->strip_attributes(array_merge($feed->strip_attributes, $spie['stripAttributes']));
-        if (isset($spie['stripComments']))
-            $feed->strip_comments($spie['stripComments']);
-        if (isset($spie['stripHtmlTags']))
-            $feed->strip_htmltags(array_merge($feed->strip_htmltags, $spie['stripHtmlTags']));
-
-        /**
-         * Initiating the Feeding.
-         * This always be placed AFTER all the settings above.
-         */
-        if (!$feed->init()) {
-            echo $feed->error();
-            return FALSE;
-        }
-
-        $countItems = count($feed->get_items());
-        if (1 > $countItems) {
-            continue;
-        }
-
-        $feed->handle_content_type();
-
-        $i = 0;
+        $joinKey = 0;
         $phArray = array();
-        foreach ($feed->get_items($spie['getItemStart'], $spie['getItemLength']) as $item) {
-            $phArray[$i]['favicon'] = $feed->get_favicon();
-            $phArray[$i]['link'] = $item->get_link();
-            $phArray[$i]['title'] = $item->get_title();
-            $phArray[$i]['description'] = $item->get_description();
-            $phArray[$i]['content'] = $item->get_content();
+        foreach ($this->spie['setFeedUrl'] as $setFeedUrl) {
+            $feed->set_cache_location($this->spie['setCacheLocation']);
+            $feed->set_feed_url($setFeedUrl);
 
-            $phArray[$i]['permalink'] = $item->get_permalink();
-            $parsedUrl = parse_url($phArray[$i]['permalink']);
-            $implodedParsedUrl = $parsedUrl['scheme'] . '://' . $parsedUrl['host'];
-            $imageLink = $feed->get_image_link() != '' ? $feed->get_image_link() : $implodedParsedUrl;
-            $phArray[$i]['imageLink'] = $imageLink;
+            if (isset($this->spie['setInputEncoding'])) {
+                $feed->set_input_encoding($this->spie['setInputEncoding']);
+            }
+            if (isset($this->spie['setOutputEncoding'])) {
+                $feed->set_output_encoding($this->spie['setOutputEncoding']);
+            }
+            // if no cURL, try fsockopen
+            if ($this->spie['forceFSockopen']) {
+                $feed->force_fsockopen(true);
+            }
+            if (isset($this->spie['enableCache']))
+                $feed->enable_cache($this->spie['enableCache']);
+            if (isset($this->spie['enableOrderByDate']))
+                $feed->enable_order_by_date($this->spie['enableOrderByDate']);
+            if (isset($this->spie['setCacheDuration']))
+                $feed->set_cache_duration($this->spie['setCacheDuration']);
+            if (!empty($this->spie['setFaviconHandler']))
+                $feed->set_favicon_handler($this->spie['setFaviconHandler'][0], $this->spie['setFaviconHandler'][1]);
+            if (!empty($this->spie['setImageHandler'])) {
+                // handler_image.php?image=67d5fa9a87bad230fb03ea68b9f71090
+                $feed->set_image_handler($this->spie['setImageHandler'][0], $this->spie['setImageHandler'][1]);
+            }
 
-            $phArray[$i]['imageTitle'] = $feed->get_image_title();
-            $phArray[$i]['imageUrl'] = $feed->get_image_url();
-            $phArray[$i]['imageWidth'] = $feed->get_image_width();
-            $phArray[$i]['imageHeight'] = $feed->get_image_height();
+            // disabled since these are all splitted into a single fetching
+            // it's  been used with different way, see below looping
+            if (isset($this->spie['setItemLimit']))
+                $feed->set_item_limit((int) $this->spie['setItemLimit']);
 
-            $phArray[$i]['date'] = $item->get_date($spie['dateFormat']);
-            $phArray[$i]['localDate'] = $item->get_local_date($spie['localDateFormat']);
-            $phArray[$i]['copyright'] = $item->get_copyright();
+            if (isset($this->spie['setJavascript']))
+                $feed->set_javascript($this->spie['setJavascript']);
+            if (isset($this->spie['stripAttributes']))
+                $feed->strip_attributes(array_merge($feed->strip_attributes, $this->spie['stripAttributes']));
+            if (isset($this->spie['stripComments']))
+                $feed->strip_comments($this->spie['stripComments']);
+            if (isset($this->spie['stripHtmlTags']))
+                $feed->strip_htmltags(array_merge($feed->strip_htmltags, $this->spie['stripHtmlTags']));
 
-            $phArray[$i]['latitude'] = $feed->get_latitude();
-            $phArray[$i]['longitude'] = $feed->get_longitude();
+            /**
+             * Initiating the Feeding.
+             * This always be placed AFTER all the settings above.
+             */
+            if (!$feed->init()) {
+                echo $feed->error();
+                return FALSE;
+            }
 
-            $phArray[$i]['language'] = $feed->get_language();
-            $phArray[$i]['encoding'] = $feed->get_encoding();
+            $feed->handle_content_type();
 
-            if ($item->get_authors()) {
-                foreach ($item->get_authors() as $authorObject) {
-                    $authorName = $authorObject->get_name();
-                    $authorLink = $authorObject->get_link();
-                    $authorEmail = $authorObject->get_email();
+            $feedItems = $feed->get_items($this->spie['getItemStart'], $this->spie['getItemLength']);
+            if (empty($feedItems)) {
+                continue;
+            }
+            foreach ($feedItems as $item) {
+                $phArray[$joinKey]['favicon'] = $feed->get_favicon();
+                $phArray[$joinKey]['link'] = $item->get_link();
+                $phArray[$joinKey]['title'] = $item->get_title();
+                $phArray[$joinKey]['description'] = $item->get_description();
+                $phArray[$joinKey]['content'] = $item->get_content();
+
+                $phArray[$joinKey]['permalink'] = $item->get_permalink();
+                $parsedUrl = parse_url($phArray[$joinKey]['permalink']);
+                $implodedParsedUrl = $parsedUrl['scheme'] . '://' . $parsedUrl['host'];
+                $imageLink = $feed->get_image_link() != '' ? $feed->get_image_link() : $implodedParsedUrl;
+                $phArray[$joinKey]['imageLink'] = $imageLink;
+
+                $phArray[$joinKey]['imageTitle'] = $feed->get_image_title();
+                $phArray[$joinKey]['imageUrl'] = $feed->get_image_url();
+                $phArray[$joinKey]['imageWidth'] = $feed->get_image_width();
+                $phArray[$joinKey]['imageHeight'] = $feed->get_image_height();
+
+                $phArray[$joinKey]['date'] = $item->get_date($this->spie['dateFormat']);
+                $phArray[$joinKey]['localDate'] = $item->get_local_date($this->spie['localDateFormat']);
+                $phArray[$joinKey]['copyright'] = $item->get_copyright();
+
+                $phArray[$joinKey]['latitude'] = $feed->get_latitude();
+                $phArray[$joinKey]['longitude'] = $feed->get_longitude();
+
+                $phArray[$joinKey]['language'] = $feed->get_language();
+                $phArray[$joinKey]['encoding'] = $feed->get_encoding();
+
+                if ($item->get_authors()) {
+                    foreach ($item->get_authors() as $authorObject) {
+                        $authorName = $authorObject->get_name();
+                        $authorLink = $authorObject->get_link();
+                        $authorEmail = $authorObject->get_email();
+                    }
+                    $phArray[$joinKey]['authorName'] = $authorName;
+                    $phArray[$joinKey]['authorLink'] = $authorLink;
+                    $phArray[$joinKey]['authorEmail'] = $authorEmail;
                 }
-                $phArray[$i]['authorName'] = $authorName;
-                $phArray[$i]['authorLink'] = $authorLink;
-                $phArray[$i]['authorEmail'] = $authorEmail;
-            } else {
-                $phArray[$i]['authorName'] = '';
-                $phArray[$i]['authorLink'] = '';
-                $phArray[$i]['authorEmail'] = '';
-            }
 
-            $category = $item->get_category();
-            if ($category) {
-                $phArray[$i]['category'] = htmlspecialchars_decode($category->get_label(), ENT_QUOTES);
-            } else {
-                $phArray[$i]['category'] = '';
-            }
+                $category = $item->get_category();
+                if ($category) {
+                    $phArray[$joinKey]['category'] = htmlspecialchars_decode($category->get_label(), ENT_QUOTES);
+                }
 
-            $contributor = $item->get_contributor();
-            $phArray[$i]['contributor'] = '';
-            if ($contributor) {
-                $phArray[$i]['contributor'] = $contributor->get_name();
-            } else {
-                $phArray[$i]['contributor'] = '';
-            }
+                $contributor = $item->get_contributor();
+                $phArray[$joinKey]['contributor'] = '';
+                if ($contributor) {
+                    $phArray[$joinKey]['contributor'] = $contributor->get_name();
+                }
 
-            if ($feed->get_type() & SIMPLEPIE_TYPE_NONE) {
-                $phArray[$i]['getType'] = 'Unknown';
-            } elseif ($feed->get_type() & SIMPLEPIE_TYPE_RSS_ALL) {
-                $phArray[$i]['getType'] = 'RSS';
-            } elseif ($feed->get_type() & SIMPLEPIE_TYPE_ATOM_ALL) {
-                $phArray[$i]['getType'] = 'Atom';
-            } elseif ($feed->get_type() & SIMPLEPIE_TYPE_ALL) {
-                $phArray[$i]['getType'] = 'Supported';
-            } else {
-                $phArray[$i]['getType'] = '';
-            }
-            
-            // Media from Flickr RSS stream
-            $enclosure = $item->get_enclosure();
-            if ($enclosure) {
-                $phArray[$i]['itemImageThumbnailUrl'] = $enclosure->get_thumbnail();
-                $phArray[$i]['itemImageWidth'] = $enclosure->get_width();
-                $phArray[$i]['itemImageHeight'] = $enclosure->get_height();
-            } else {
-                $phArray[$i]['itemImageThumbnailUrl'] = '';
-                $phArray[$i]['itemImageWidth'] = '';
-                $phArray[$i]['itemImageHeight'] = '';
-            }
+                if ($feed->get_type() & SIMPLEPIE_TYPE_NONE) {
+                    $phArray[$joinKey]['getType'] = 'Unknown';
+                } elseif ($feed->get_type() & SIMPLEPIE_TYPE_RSS_ALL) {
+                    $phArray[$joinKey]['getType'] = 'RSS';
+                } elseif ($feed->get_type() & SIMPLEPIE_TYPE_ATOM_ALL) {
+                    $phArray[$joinKey]['getType'] = 'Atom';
+                } elseif ($feed->get_type() & SIMPLEPIE_TYPE_ALL) {
+                    $phArray[$joinKey]['getType'] = 'Supported';
+                }
 
-            $i++;
-        } // foreach ($feed->get_items($getItemStart, $getItemLength) as $item)
+                // Media from Flickr RSS stream
+                if ($enclosure = $item->get_enclosure()) {
+                    $phArray[$joinKey]['itemImageThumbnailUrl'] = $enclosure->get_thumbnail();
+                    $phArray[$joinKey]['itemImageWidth'] = $enclosure->get_width();
+                    $phArray[$joinKey]['itemImageHeight'] = $enclosure->get_height();
+                }
+
+                $joinKey++;
+            } // foreach ($feed->get_items($getItemStart, $getItemEnd) as $item)
+        } // foreach ($this->spie['setFeedUrl'] as $setFeedUrl)
 
         return $this->_filterModxTags($phArray);
     }
 
     /**
-     * Sorting by keys.
+     * Sorting by key/placeholder.
      * This ignores the simplepie's enable_order_by_date(),
      * to adjust multiple feeds.
      * @link http://simplepie.org/wiki/reference/simplepie/enable_order_by_date
      */
-    private function _sortFeeds($feeds, $sortBy, $sortOrder) {
+    private function _sortFeeds($feeds) {
         $sortByArray = array();
         foreach ($feeds as $k => $v) {
-            if ('date' == strtolower($sortBy)) {
+            if ('date' == strtolower($this->spie['sortBy'])) {
                 $sortByArray[strtotime($v['date'])] = $v;
-            } elseif ('localdate' == strtolower($sortBy)) {
+            } elseif ('localdate' == strtolower($this->spie['sortBy'])) {
                 $sortByArray[strtotime($v['localDate'])] = $v;
             } else {
-                $sortByArray[$v[$sortBy]] = $v;
+                $sortByArray[$v[$this->spie['sortBy']]] = $v;
             }
         }
         $feeds = array();
         unset($feeds);
 
-        if ('ASC' == $sortOrder) {
+        if ('ASC' == $this->spie['sortOrder']) {
             ksort($sortByArray);
         } else {
             krsort($sortByArray);
+        }
+
+        // if the result number is limited
+        $countLimit = 0;
+        if ($this->spie['setItemLimit'] > 0) {
+            foreach ($sortByArray as $k => $v) {
+                if ($this->spie['setItemLimit'] == $countLimit)
+                    break;
+                $limitedItems[$k] = $v;
+                $countLimit++;
+            }
+            // overide the previous value;
+            $sortByArray = $limitedItems;
         }
 
         return $sortByArray;
@@ -272,7 +271,7 @@ class SimplePieModx {
      * @param string    $placehoders    placeholders
      * @return string   templated result;
      */
-    public function fetchTpl($placehoders, $tpls) {
+    public function fetchTpl($placehoders) {
         $countPlacehoders = count($placehoders);
         $i = 0;
         $output = '';
@@ -282,21 +281,21 @@ class SimplePieModx {
             $i++;
 
             if (intval(0) === $i % 2) {
-                $v['feedClass'] = $tpls['rowCls'];
+                $v['feedClass'] = $this->spie['rowCls'];
             } else {
-                $v['feedClass'] = $tpls['oddRowCls'];
+                $v['feedClass'] = $this->spie['oddRowCls'];
             }
             if (intval(1) === $i) {
-                $v['feedClass'] .= ' ' . $tpls['firstRowCls'];
+                $v['feedClass'] .= ' ' . $this->spie['firstRowCls'];
             } elseif ($i == $countPlacehoders) {
-                $v['feedClass'] .= ' ' . $tpls['lastRowCls'];
+                $v['feedClass'] .= ' ' . $this->spie['lastRowCls'];
             }
 
-            $getChunk = $this->modx->getChunk($tpls['tpl']);
+            $getChunk = $this->modx->getChunk($this->spie['tpl']);
             if (!empty($getChunk)) {
-                $output .= $this->modx->getChunk($tpls['tpl'], $v);
+                $output .= $this->modx->getChunk($this->spie['tpl'], $v);
             } else {
-                $output .= $this->_fetchTplFile('tpl', $tpls['tplFilePath'], $v);
+                $output .= $this->_fetchTplFile('tpl', $this->spie['tplFilePath'], $v);
             }
         }
         return $output;

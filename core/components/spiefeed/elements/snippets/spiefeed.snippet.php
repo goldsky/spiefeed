@@ -92,8 +92,12 @@ $spie['setCacheDuration'] = $modx->getOption('setCacheDuration', $scriptProperti
  * The cache folder should be make or error will returned
  * @link http://simplepie.org/wiki/reference/simplepie/set_cache_location
  */
-$defaultCacheLocation = $modx->getOption('assets_path') . 'components/spiefeed/cache';
+$defaultCacheLocation = $modx->getOption('core_path') . 'components/spiefeed/cache';
 $spie['setCacheLocation'] = $modx->getOption('setCacheLocation', $scriptProperties, $defaultCacheLocation);
+$cachePath = realpath($spie['setCacheLocation']);
+if (!is_dir($cachePath)) {
+    @mkdir($cachePath, 0755);
+}
 
 /**
  * Set the handler to enable the display of cached favicons.
@@ -278,8 +282,8 @@ if (!class_exists('SimplePieModx')) {
 }
 
 ob_start();
-$simplePieModx = new SimplePieModx($modx);
-echo $simplePieModx->spieModx($spie);
+$simplePieModx = new SimplePieModx($modx, $spie);
+echo $simplePieModx->spieModx();
 $output = ob_get_contents();
 ob_end_clean();
 
