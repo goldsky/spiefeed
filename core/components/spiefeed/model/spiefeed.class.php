@@ -234,36 +234,43 @@ class SimplePieModx {
         $sortByArray = array();
         foreach ($feeds as $k => $v) {
             if ('date' == strtolower($this->spie['sortBy'])) {
-                $sortByArray[strtotime($v['date'])] = $v;
+                $sortByArray[strtotime($v['date'])][] = $v;
             } elseif ('localdate' == strtolower($this->spie['sortBy'])) {
-                $sortByArray[strtotime($v['localDate'])] = $v;
+                $sortByArray[strtotime($v['localDate'])][] = $v;
             } else {
-                $sortByArray[$v[$this->spie['sortBy']]] = $v;
+                $sortByArray[$v[$this->spie['sortBy']]][] = $v;
             }
         }
         $feeds = array();
         unset($feeds);
 
-        if ('ASC' == $this->spie['sortOrder']) {
+        if ('asc' == strtolower($this->spie['sortOrder'])) {
             ksort($sortByArray);
         } else {
             krsort($sortByArray);
         }
 
+        $pushedArray = array();
+        foreach ($sortByArray as $k => $v) {
+            foreach ($v as $kk => $vv) {
+                $pushedArray[] = $vv;
+            }
+        }
+
         // if the result number is limited
         $countLimit = 0;
         if ($this->spie['setItemLimit'] > 0) {
-            foreach ($sortByArray as $k => $v) {
+            foreach ($pushedArray as $k => $v) {
                 if ($this->spie['setItemLimit'] == $countLimit)
                     break;
                 $limitedItems[$k] = $v;
                 $countLimit++;
             }
             // overide the previous value;
-            $sortByArray = $limitedItems;
+            $pushedArray = $limitedItems;
         }
 
-        return $sortByArray;
+        return $pushedArray;
     }
 
     /**
