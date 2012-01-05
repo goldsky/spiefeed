@@ -1,5 +1,9 @@
+1.4-pl
+* fixed the config access to the class when the snippet is called more than once
+* added &toPlaceholder to pass the result to the specified placeholder
+
 1.3-pl
-* fixed the sorting bug caused by the same values of the sorting key.
+* fixed the sorting bug caused by the same values of the sorting key
 
 1.2-pl
 * fixed the multiple feeds

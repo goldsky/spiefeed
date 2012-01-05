@@ -60,9 +60,16 @@ class SimplePieModx {
      * Initiating MODx's object inside the class
      * @param mixed $modx  MODx's object
      */
-    public function __construct(&$modx, $spie) {
+    public function __construct(&$modx) {
         $this->modx = & $modx;
-        $this->spie = $spie;
+    }
+
+    /**
+     * Sets the parameters
+     * @param type $spie
+     */
+    public function setConfigs(&$spie) {
+        $this->spie = & $spie;
     }
 
     /**

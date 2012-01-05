@@ -282,7 +282,8 @@ if (!class_exists('SimplePieModx')) {
 }
 
 ob_start();
-$simplePieModx = new SimplePieModx($modx, $spie);
+$simplePieModx = new SimplePieModx($modx);
+$simplePieModx->setConfigs($spie);
 echo $simplePieModx->spieModx();
 $output = ob_get_contents();
 ob_end_clean();
@@ -297,4 +298,9 @@ if ($attachHeaders) {
         $modx->regClientCSS($spie['css'], 'screen');
     }
 }
+
+if (!empty($toPlaceholder)) {
+    $output = $modx->setPlaceholder($toPlaceholder, $output);
+}
+
 return $output;
