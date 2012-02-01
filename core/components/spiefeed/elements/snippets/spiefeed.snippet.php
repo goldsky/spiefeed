@@ -53,14 +53,15 @@ $defaultFeedUrl =
         // non latin-1 testing
         . '| http://www.voanews.com/templates/Articles.rss?sectionPath=/russian/news'
 ;
-$spie['setFeedUrl'] = $modx->getOption('setFeedUrl', $scriptProperties, $defaultFeedUrl);
-if (trim($spie['setFeedUrl']) == '') {
+$scriptProperties['setFeedUrl'] = $modx->getOption('setFeedUrl', $scriptProperties, $defaultFeedUrl);
+if (trim($scriptProperties['setFeedUrl']) == '') {
     return FALSE;
 }
 
-$spie['setFeedUrl'] = @explode('|', $spie['setFeedUrl']);
-foreach ($spie['setFeedUrl'] as $k => $v) {
-    $spie['setFeedUrl'][$k] = trim($v);
+$urls = @explode('|', $scriptProperties['setFeedUrl']);
+$scriptProperties['setFeedUrl'] = array();
+foreach ($urls as $k => $v) {
+    $scriptProperties['setFeedUrl'][$k] = trim($v);
 }
 
 /**
@@ -69,7 +70,7 @@ foreach ($spie['setFeedUrl'] as $k => $v) {
  * @var 0 | 1
  * @link http://simplepie.org/wiki/reference/simplepie/enable_cache
  */
-$spie['enableCache'] = $modx->getOption('enableCache', $scriptProperties);
+$scriptProperties['enableCache'] = $modx->getOption('enableCache', $scriptProperties);
 
 /**
  * Sometimes feeds don't have their items in chronological order.
@@ -79,13 +80,13 @@ $spie['enableCache'] = $modx->getOption('enableCache', $scriptProperties);
  * @link http://simplepie.org/wiki/reference/simplepie/enable_order_by_date;
  */
 $scriptProperties['enableOrderByDate'] = !empty($scriptProperties['enableOrderByDate']) && $scriptProperties['enableOrderByDate'] == '0' ? 'false' : null;
-$spie['enableOrderByDate'] = $modx->getOption('enableOrderByDate', $scriptProperties);
+$scriptProperties['enableOrderByDate'] = $modx->getOption('enableOrderByDate', $scriptProperties);
 
 /**
  * Set the minimum time (in seconds) for which a feed will be cached.
  * @link http://simplepie.org/wiki/reference/simplepie/set_cache_duration
  */
-$spie['setCacheDuration'] = $modx->getOption('setCacheDuration', $scriptProperties);
+$scriptProperties['setCacheDuration'] = $modx->getOption('setCacheDuration', $scriptProperties);
 
 /**
  * Set the file system location (not WWW location) where the cache files should be written.
@@ -93,8 +94,8 @@ $spie['setCacheDuration'] = $modx->getOption('setCacheDuration', $scriptProperti
  * @link http://simplepie.org/wiki/reference/simplepie/set_cache_location
  */
 $defaultCacheLocation = $modx->getOption('core_path') . 'components/spiefeed/cache';
-$spie['setCacheLocation'] = $modx->getOption('setCacheLocation', $scriptProperties, $defaultCacheLocation);
-$cachePath = realpath($spie['setCacheLocation']);
+$scriptProperties['setCacheLocation'] = $modx->getOption('setCacheLocation', $scriptProperties, $defaultCacheLocation);
+$cachePath = realpath($scriptProperties['setCacheLocation']);
 if (!is_dir($cachePath)) {
     @mkdir($cachePath, 0755);
 }
@@ -103,12 +104,12 @@ if (!is_dir($cachePath)) {
  * Set the handler to enable the display of cached favicons.
  * @link http://simplepie.org/wiki/reference/simplepie/set_favicon_handler
  */
-$spie['setFaviconHandler'] = array();
+$scriptProperties['setFaviconHandler'] = array();
 $setFaviconHandler = $modx->getOption('setFaviconHandler', $scriptProperties);
 if (!empty($setFaviconHandler)) {
-    $spie['setFaviconHandler'] = @explode(',', $setFaviconHandler);
-    foreach ($spie['setFaviconHandler'] as $k => $v) {
-        $spie['setFaviconHandler'][$k] = trim($v);
+    $scriptProperties['setFaviconHandler'] = @explode(',', $setFaviconHandler);
+    foreach ($scriptProperties['setFaviconHandler'] as $k => $v) {
+        $scriptProperties['setFaviconHandler'][$k] = trim($v);
     }
 }
 
@@ -119,12 +120,12 @@ if (!empty($setFaviconHandler)) {
  * (b) the file that will be used to read them back from the cache and display them.
  * @link http://simplepie.org/wiki/reference/simplepie/set_image_handler
  */
-$spie['setImageHandler'] = array();
+$scriptProperties['setImageHandler'] = array();
 $setImageHandler = $modx->getOption('setImageHandler', $scriptProperties);
 if (!empty($setImageHandler)) {
-    $spie['setImageHandler'] = @explode(',', $setImageHandler);
-    foreach ($spie['setImageHandler'] as $k => $v) {
-        $spie['setImageHandler'][$k] = trim($v);
+    $scriptProperties['setImageHandler'] = @explode(',', $setImageHandler);
+    foreach ($scriptProperties['setImageHandler'] as $k => $v) {
+        $scriptProperties['setImageHandler'][$k] = trim($v);
     }
 }
 
@@ -134,14 +135,14 @@ if (!empty($setImageHandler)) {
  * For that, you want to pass $start and $length parameters to get_items()
  * @link http://simplepie.org/wiki/reference/simplepie/set_item_limit
  */
-$spie['setItemLimit'] = (int) $modx->getOption('setItemLimit', $scriptProperties);
+$scriptProperties['setItemLimit'] = (int) $modx->getOption('setItemLimit', $scriptProperties);
 
 /**
  * Set the query string that triggers SimplePie to generate the JavaScript code
  * for embedding media files.
  * @link http://simplepie.org/wiki/reference/simplepie/set_javascript
  */
-$spie['setJavascript'] = $modx->getOption('setJavascript', $scriptProperties);
+$scriptProperties['setJavascript'] = $modx->getOption('setJavascript', $scriptProperties);
 
 /**
  * Set which attributes get stripped from an entry's content. <br />
@@ -150,12 +151,12 @@ $spie['setJavascript'] = $modx->getOption('setJavascript', $scriptProperties);
  * This way, you can modify the existing list without having to create a whole new one.
  * @link http://simplepie.org/wiki/reference/simplepie/strip_attributes
  */
-$spie['stripAttributes'] = array();
+$scriptProperties['stripAttributes'] = array();
 $stripAttributes = $modx->getOption('stripAttributes', $scriptProperties);
 if (!empty($stripAttributes)) {
-    $spie['stripAttributes'] = @explode(',', $stripAttributes);
-    foreach ($spie['stripAttributes'] as $k => $v) {
-        $spie['stripAttributes'][$k] = trim($v);
+    $scriptProperties['stripAttributes'] = @explode(',', $stripAttributes);
+    foreach ($scriptProperties['stripAttributes'] as $k => $v) {
+        $scriptProperties['stripAttributes'][$k] = trim($v);
     }
 }
 
@@ -164,7 +165,7 @@ if (!empty($stripAttributes)) {
  * @link http://simplepie.org/wiki/reference/simplepie/strip_comments
  */
 $scriptProperties['stripComments'] = !empty($scriptProperties['stripComments']) && $scriptProperties['stripComments'] == '1' ? 'true' : null;
-$spie['stripComments'] = $modx->getOption('stripComments', $scriptProperties);
+$scriptProperties['stripComments'] = $modx->getOption('stripComments', $scriptProperties);
 
 /**
  * Set which HTML tags get stripped from an entry's content. <br />
@@ -173,12 +174,12 @@ $spie['stripComments'] = $modx->getOption('stripComments', $scriptProperties);
  * This way, you can modify the existing list without having to create a whole new one.
  * @link http://simplepie.org/wiki/reference/simplepie/strip_htmltags
  */
-$spie['stripHtmlTags'] = array();
+$scriptProperties['stripHtmlTags'] = array();
 $stripHtmlTags = $modx->getOption('stripHtmlTags', $scriptProperties);
 if (!empty($stripHtmlTags)) {
-    $spie['stripHtmlTags'] = @explode(',', $stripHtmlTags);
-    foreach ($spie['stripHtmlTags'] as $k => $v) {
-        $spie['stripHtmlTags'][$k] = trim($v);
+    $scriptProperties['stripHtmlTags'] = @explode(',', $stripHtmlTags);
+    foreach ($scriptProperties['stripHtmlTags'] as $k => $v) {
+        $scriptProperties['stripHtmlTags'][$k] = trim($v);
     }
 }
 
@@ -187,7 +188,7 @@ if (!empty($stripHtmlTags)) {
  * Only supports the English language
  * @link http://simplepie.org/wiki/reference/simplepie_item/get_date
  */
-$spie['dateFormat'] = $modx->getOption('dateFormat', $scriptProperties);
+$scriptProperties['dateFormat'] = $modx->getOption('dateFormat', $scriptProperties);
 
 /**
  * Returns the date/timestamp of the posting in the localized language.
@@ -196,14 +197,14 @@ $spie['dateFormat'] = $modx->getOption('dateFormat', $scriptProperties);
  * The available localizations depend on which ones are installed on your web server.
  * @link http://simplepie.org/wiki/reference/simplepie_item/get_local_date
  */
-$spie['localDateFormat'] = $modx->getOption('localDateFormat', $scriptProperties);
+$scriptProperties['localDateFormat'] = $modx->getOption('localDateFormat', $scriptProperties);
 
 /**
  * Returns an array of SimplePie_Item references for each item in the feed, which can be looped through.
  * @link http://simplepie.org/wiki/reference/simplepie/get_items
  */
-$spie['getItemStart'] = $modx->getOption('getItemStart', $scriptProperties);
-$spie['getItemLength'] = $modx->getOption('getItemLength', $scriptProperties);
+$scriptProperties['getItemStart'] = $modx->getOption('getItemStart', $scriptProperties);
+$scriptProperties['getItemLength'] = $modx->getOption('getItemLength', $scriptProperties);
 
 /**
  * If cURL is available, SimplePie will use it instead of the built-in fsockopen functions for fetching remote feeds.
@@ -211,7 +212,7 @@ $spie['getItemLength'] = $modx->getOption('getItemLength', $scriptProperties);
  * @link http://simplepie.org/wiki/reference/simplepie/force_fsockopen
  */
 $scriptProperties['forceFSockopen'] = !empty($scriptProperties['forceFSockopen']) && $scriptProperties['forceFSockopen'] == '0' ? 0 : 1;
-$spie['forceFSockopen'] = $modx->getOption('forceFSockopen', $scriptProperties);
+$scriptProperties['forceFSockopen'] = $modx->getOption('forceFSockopen', $scriptProperties);
 
 /**
  * Allows you to override the character encoding of the feed.
@@ -224,7 +225,7 @@ $spie['forceFSockopen'] = $modx->getOption('forceFSockopen', $scriptProperties);
  * @link http://simplepie.org/wiki/reference/simplepie/set_input_encoding
  * @link http://simplepie.org/wiki/faq/supported_character_encodings
  */
-$spie['setInputEncoding'] = $modx->getOption('setInputEncoding', $scriptProperties);
+$scriptProperties['setInputEncoding'] = $modx->getOption('setInputEncoding', $scriptProperties);
 
 /**
  * Allows you to override SimplePie's output to match that of your webpage.
@@ -241,66 +242,71 @@ $spie['setInputEncoding'] = $modx->getOption('setInputEncoding', $scriptProperti
  * @link http://simplepie.org/wiki/reference/simplepie/set_output_encoding
  * @link http://simplepie.org/wiki/faq/supported_character_encodings
  */
-$spie['setOutputEncoding'] = $modx->getOption('setOutputEncoding', $scriptProperties);
+$scriptProperties['setOutputEncoding'] = $modx->getOption('setOutputEncoding', $scriptProperties);
 
-$spie['sortBy'] = $modx->getOption('sortBy', $scriptProperties, 'date');
+$scriptProperties['sortBy'] = $modx->getOption('sortBy', $scriptProperties, 'date');
 $scriptProperties['sortOrder'] = !empty($scriptProperties['sortOrder']) && strtoupper($scriptProperties['sortOrder']) == 'ASC' ? 'ASC' : 'DESC';
-$spie['sortOrder'] = $modx->getOption('sortOrder', $scriptProperties);
+$scriptProperties['sortOrder'] = $modx->getOption('sortOrder', $scriptProperties);
 
 /**
  * Templates
  */
-$spie['tpl'] = $modx->getOption('tpl', $scriptProperties);
-$spie['tplPath'] = MODX_BASE_PATH . $modx->getOption('tplPath', $scriptProperties);
-$spie['tplFile'] = $modx->getOption('tplFile', $scriptProperties);
-$spie['tplFilePath'] = $spie['tplPath'] . $spie['tplFile'];
-$spie['firstRowCls'] = $modx->getOption('firstRowCls', $scriptProperties);
-$spie['lastRowCls'] = $modx->getOption('lastRowCls', $scriptProperties);
-$spie['rowCls'] = $modx->getOption('rowCls', $scriptProperties);
-$spie['oddRowCls'] = $modx->getOption('oddRowCls', $scriptProperties);
-
-// clean up all empty params
-foreach ($spie as $k => $v) {
-    if (trim($spie[$k]) == '' || (is_array($spie[$k]) && empty($v)))
-        unset($spie[$k]);
-}
+$scriptProperties['tpl'] = $modx->getOption('tpl', $scriptProperties);
+$scriptProperties['tplPath'] = MODX_BASE_PATH . $modx->getOption('tplPath', $scriptProperties);
+$scriptProperties['tplFile'] = $modx->getOption('tplFile', $scriptProperties);
+$scriptProperties['tplFilePath'] = $scriptProperties['tplPath'] . $scriptProperties['tplFile'];
+$scriptProperties['firstRowCls'] = $modx->getOption('firstRowCls', $scriptProperties);
+$scriptProperties['lastRowCls'] = $modx->getOption('lastRowCls', $scriptProperties);
+$scriptProperties['rowCls'] = $modx->getOption('rowCls', $scriptProperties);
+$scriptProperties['oddRowCls'] = $modx->getOption('oddRowCls', $scriptProperties);
 
 ################################################################################
 
-$spieModxClassFile = MODX_CORE_PATH . 'components/spiefeed/model/spiefeed.class.php';
-$spie['simplePieClassFile'] = MODX_CORE_PATH . 'components/spiefeed/includes/simplepie/simplepie.inc';
+$scriptPropertiesModxClassFile = MODX_CORE_PATH . 'components/spiefeed/model/spiefeed.class.php';
+$scriptProperties['simplePieClassFile'] = MODX_CORE_PATH . 'components/spiefeed/includes/simplepie/simplepie.inc';
 
 $output = '';
-$attachHeaders = FALSE;
 
 if (!class_exists('SimplePieModx')) {
-    if (!file_exists($spieModxClassFile)) {
-        $output = 'File ' . $spieModxClassFile . ' does not exist.';
+    if (!file_exists($scriptPropertiesModxClassFile)) {
+        return 'File ' . $scriptPropertiesModxClassFile . ' does not exist.';
     } else {
-        include_once $spieModxClassFile;
+        include_once $scriptPropertiesModxClassFile;
     }
 }
 
 ob_start();
 $simplePieModx = new SimplePieModx($modx);
-$simplePieModx->setConfigs($spie);
-echo $simplePieModx->spieModx();
+$simplePieModx->setConfigs($scriptProperties);
+$phs = $simplePieModx->getPlaceholders();
+
+if (!empty($phs['err'])) {
+    echo $phs['err'];
+} else {
+    $feeds = $simplePieModx->sortPlaceholders($phs['suc']);
+    if (!empty($toArray)) {
+        echo '<pre>' . print_r($feeds, 1) . '</pre>';
+    } else {
+        echo $simplePieModx->fetchTpl($feeds);
+    }
+}
+
 $output = ob_get_contents();
 ob_end_clean();
 
 if (!empty($output)) {
-    $attachHeaders = TRUE;
-}
-
-if ($attachHeaders) {
-    $spie['css'] = $modx->getOption('css', $scriptProperties);
-    if ($spie['css'] != 'disabled') {
-        $modx->regClientCSS($spie['css'], 'screen');
+    $scriptProperties['css'] = $modx->getOption('css', $scriptProperties);
+    if ($scriptProperties['css'] != 'disabled') {
+        $modx->regClientCSS($scriptProperties['css'], 'screen');
+    }
+    if (!empty($toPlaceholder)) {
+        $output = $modx->setPlaceholder($toPlaceholder, $output);
+    }
+} else {
+    if (!empty($emptyMessage)) {
+        $output = $emptyMessage;
     }
 }
 
-if (!empty($toPlaceholder)) {
-    $output = $modx->setPlaceholder($toPlaceholder, $output);
-}
 
 return $output;

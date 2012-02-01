@@ -1,3 +1,9 @@
+1.5-pl
+* fixed the bug on the params cleaner
+* added &debug param
+* added &toArray param
+* added &emptyMessage as a custom empty message
+
 1.4-pl
 * fixed the config access to the class when the snippet is called more than once
 * added &toPlaceholder to pass the result to the specified placeholder

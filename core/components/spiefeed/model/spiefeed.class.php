@@ -51,6 +51,7 @@ class SimplePieModx {
      * @var MODx's object reference
      */
     public $modx;
+
     /**
      * @var mixed   snippet call's parameters
      */
@@ -66,41 +67,33 @@ class SimplePieModx {
 
     /**
      * Sets the parameters
-     * @param type $spie
+     * @param   array   $spie   $scriptProperties
      */
     public function setConfigs(&$spie) {
         $this->spie = & $spie;
     }
 
     /**
-     * Essambles the parameters to be sorted into the placeholders and
-     * returns them inside a template.
-     * @return string   final output
-     */
-    public function spieModx() {
-        $placeholders = $this->_setSimplePieModxPlaceholders();
-        if (FALSE === $placeholders)
-            return FALSE;
-
-        $sortedPlaceholders = $this->_sortFeeds($placeholders);
-        return $this->fetchTpl($sortedPlaceholders);
-    }
-
-    /**
      * Processing the parameters into placeholders
      * @return array    placeholders
      */
-    private function _setSimplePieModxPlaceholders() {
+    public function getPlaceholders() {
+        $res = array();
+        $res['err'] = '';
+        $res['suc'] = '';
         /**
          * @link http://github.com/simplepie/simplepie/tree/one-dot-two
          */
         if (!file_exists($this->spie['simplePieClassFile'])) {
-            return 'File ' . $this->spie['simplePieClassFile'] . ' does not exist.';
+            $res['err'] = 'File ' . $this->spie['simplePieClassFile'] . ' does not exist.';
+            return $res;
         }
+
         include_once $this->spie['simplePieClassFile'];
         $feed = new SimplePie();
         $joinKey = 0;
         $phArray = array();
+
         foreach ($this->spie['setFeedUrl'] as $setFeedUrl) {
             $feed->set_cache_location($this->spie['setCacheLocation']);
             $feed->set_feed_url($setFeedUrl);
@@ -147,8 +140,10 @@ class SimplePieModx {
              * This always be placed AFTER all the settings above.
              */
             if (!$feed->init()) {
-                echo $feed->error();
-                return FALSE;
+                if (!empty($this->spie['debug'])) {
+                    $res['err'] = $feed->error();
+                }
+                return $res;
             }
 
             $feed->handle_content_type();
@@ -228,7 +223,13 @@ class SimplePieModx {
             } // foreach ($feed->get_items($getItemStart, $getItemEnd) as $item)
         } // foreach ($this->spie['setFeedUrl'] as $setFeedUrl)
 
-        return $this->_filterModxTags($phArray);
+        if (0 === $joinKey && isset($this->spie['emptyMessage'])) {
+            $res['err'] = $this->spie['emptyMessage'];
+        } else {
+            $res['suc'] = $this->_filterModxTags($phArray);
+        }
+
+        return $res;
     }
 
     /**
@@ -237,9 +238,9 @@ class SimplePieModx {
      * to adjust multiple feeds.
      * @link http://simplepie.org/wiki/reference/simplepie/enable_order_by_date
      */
-    private function _sortFeeds($feeds) {
+    public function sortPlaceholders($phs) {
         $sortByArray = array();
-        foreach ($feeds as $k => $v) {
+        foreach ($phs as $k => $v) {
             if ('date' == strtolower($this->spie['sortBy'])) {
                 $sortByArray[strtotime($v['date'])][] = $v;
             } elseif ('localdate' == strtolower($this->spie['sortBy'])) {
@@ -248,8 +249,8 @@ class SimplePieModx {
                 $sortByArray[$v[$this->spie['sortBy']]][] = $v;
             }
         }
-        $feeds = array();
-        unset($feeds);
+        $phs = array();
+        unset($phs);
 
         if ('asc' == strtolower($this->spie['sortOrder'])) {
             ksort($sortByArray);
@@ -259,7 +260,7 @@ class SimplePieModx {
 
         $pushedArray = array();
         foreach ($sortByArray as $k => $v) {
-            foreach ($v as $kk => $vv) {
+            foreach ($v as $vv) {
                 $pushedArray[] = $vv;
             }
         }
@@ -282,16 +283,14 @@ class SimplePieModx {
 
     /**
      * Initiating the templates.
-     * @param string    $placehoders    placeholders
-     * @return string   templated result;
+     * @param string    $phs    placeholders
+     * @return string   parsed result;
      */
-    public function fetchTpl($placehoders) {
-        $countPlacehoders = count($placehoders);
+    public function fetchTpl($phs) {
+        $countPlacehoders = count($phs);
         $i = 0;
         $output = '';
-        $chunk = null;
-
-        foreach ($placehoders as $v) {
+        foreach ($phs as $v) {
             $i++;
 
             if (intval(0) === $i % 2) {
@@ -330,7 +329,13 @@ class SimplePieModx {
         return FALSE;
     }
 
-    private function _filterModxTags($sources=array(), array $filters= array()) {
+    /**
+     * Replace tags
+     * @param array     $sources    parsed template
+     * @param array     $filters    custom filters
+     * @return array    parsed tags
+     */
+    private function _filterModxTags($sources = array(), array $filters = array()) {
         if (empty($filters)) {
             $filters = array(
                 '[[' => '&#91;&#91;',
