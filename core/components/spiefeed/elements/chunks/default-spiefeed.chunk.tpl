@@ -6,7 +6,6 @@
       </a>
     </div>
     <span class="feedLink">
-        <img src="[[+favicon]]" alt="" />
         <a href="[[+link]]" target="_blank">[[+title]]</a>
     </span>
     <div class="feedAuthor">

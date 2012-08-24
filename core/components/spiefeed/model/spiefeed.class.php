@@ -114,8 +114,6 @@ class SimplePieModx {
                 $feed->enable_order_by_date($this->spie['enableOrderByDate']);
             if (isset($this->spie['setCacheDuration']))
                 $feed->set_cache_duration($this->spie['setCacheDuration']);
-            if (!empty($this->spie['setFaviconHandler']))
-                $feed->set_favicon_handler($this->spie['setFaviconHandler'][0], $this->spie['setFaviconHandler'][1]);
             if (!empty($this->spie['setImageHandler'])) {
                 // handler_image.php?image=67d5fa9a87bad230fb03ea68b9f71090
                 $feed->set_image_handler($this->spie['setImageHandler'][0], $this->spie['setImageHandler'][1]);
@@ -153,7 +151,6 @@ class SimplePieModx {
                 continue;
             }
             foreach ($feedItems as $item) {
-                $phArray[$joinKey]['favicon'] = $feed->get_favicon();
                 $phArray[$joinKey]['link'] = $item->get_link();
                 $phArray[$joinKey]['title'] = $item->get_title();
                 $phArray[$joinKey]['description'] = $item->get_description();
@@ -202,13 +199,13 @@ class SimplePieModx {
                     $phArray[$joinKey]['contributor'] = $contributor->get_name();
                 }
 
-                if ($feed->get_type() & SIMPLEPIE_TYPE_NONE) {
+                if ($feed->get_type() && SIMPLEPIE_TYPE_NONE) {
                     $phArray[$joinKey]['getType'] = 'Unknown';
-                } elseif ($feed->get_type() & SIMPLEPIE_TYPE_RSS_ALL) {
+                } elseif ($feed->get_type() && SIMPLEPIE_TYPE_RSS_ALL) {
                     $phArray[$joinKey]['getType'] = 'RSS';
-                } elseif ($feed->get_type() & SIMPLEPIE_TYPE_ATOM_ALL) {
+                } elseif ($feed->get_type() && SIMPLEPIE_TYPE_ATOM_ALL) {
                     $phArray[$joinKey]['getType'] = 'Atom';
-                } elseif ($feed->get_type() & SIMPLEPIE_TYPE_ALL) {
+                } elseif ($feed->get_type() && SIMPLEPIE_TYPE_ALL) {
                     $phArray[$joinKey]['getType'] = 'Supported';
                 }
 

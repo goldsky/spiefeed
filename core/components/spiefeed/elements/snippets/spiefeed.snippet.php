@@ -101,19 +101,6 @@ if (!is_dir($cachePath)) {
 }
 
 /**
- * Set the handler to enable the display of cached favicons.
- * @link http://simplepie.org/wiki/reference/simplepie/set_favicon_handler
- */
-$scriptProperties['setFaviconHandler'] = array();
-$setFaviconHandler = $modx->getOption('setFaviconHandler', $scriptProperties);
-if (!empty($setFaviconHandler)) {
-    $scriptProperties['setFaviconHandler'] = @explode(',', $setFaviconHandler);
-    foreach ($scriptProperties['setFaviconHandler'] as $k => $v) {
-        $scriptProperties['setFaviconHandler'][$k] = trim($v);
-    }
-}
-
-/**
  * Set the handler to enable the display of cached images.
  * Setting set_image_handler() tells SimplePie :<br/>
  * (a) to cache them in the first place, and <br />
@@ -263,7 +250,7 @@ $scriptProperties['oddRowCls'] = $modx->getOption('oddRowCls', $scriptProperties
 ################################################################################
 
 $scriptPropertiesModxClassFile = MODX_CORE_PATH . 'components/spiefeed/model/spiefeed.class.php';
-$scriptProperties['simplePieClassFile'] = MODX_CORE_PATH . 'components/spiefeed/includes/simplepie/simplepie.inc';
+$scriptProperties['simplePieClassFile'] = MODX_CORE_PATH . 'components/spiefeed/includes/simplepie/simplepie_1.3.mini.php';
 
 $output = '';
 
