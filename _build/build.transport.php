@@ -53,26 +53,26 @@ set_time_limit(0);
 /* define version */
 define('PKG_NAME', 'spieFeed');
 define('PKG_NAME_LOWER', 'spiefeed');
-define('PKG_VERSION', '1.5');
+define('PKG_VERSION', '1.6.0');
 define('PKG_RELEASE', 'pl');
-
-/* define sources */
-$root = dirname(dirname(__FILE__)) . '/';
-$sources = array(
-    'root' => $root,
-    'build' => $root . '_build/',
-    'resolvers' => $root . '_build/resolvers/',
-    'data' => $root . '_build/data/',
-    'source_core' => $root . 'core/components/' . PKG_NAME_LOWER,
-    'source_assets' => $root . 'assets/components/' . PKG_NAME_LOWER,
-    'docs' => $root . 'core/components/' . PKG_NAME_LOWER . '/docs/',
-    'lexicon' => $root . 'core/components/' . PKG_NAME_LOWER . '/lexicon/',
-);
-unset($root);
 
 /* override with your own defines here (see build.config.sample.php) */
 require_once dirname(__FILE__) . '/build.config.php';
 require_once MODX_CORE_PATH . 'model/modx/modx.class.php';
+
+/* define sources */
+$root = dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR;
+$sources = array(
+    'root' => $root,
+    'build' => BUILD_PATH,
+    'resolvers' => BUILD_PATH . 'resolvers' . DIRECTORY_SEPARATOR,
+    'data' => BUILD_PATH . 'data' . DIRECTORY_SEPARATOR,
+    'source_core' => realpath(MODX_CORE_PATH . 'components') . DIRECTORY_SEPARATOR . PKG_NAME_LOWER,
+    'source_assets' => realpath(MODX_ASSETS_PATH . 'components') . DIRECTORY_SEPARATOR . PKG_NAME_LOWER,
+    'docs' => realpath(MODX_CORE_PATH . 'components/' . PKG_NAME_LOWER . '/docs/') . DIRECTORY_SEPARATOR,
+    'lexicon' => realpath(MODX_CORE_PATH . 'components/' . PKG_NAME_LOWER . '/lexicon/') . DIRECTORY_SEPARATOR,
+);
+unset($root);
 
 $modx = new modX();
 $modx->initialize('mgr');
