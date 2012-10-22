@@ -57,6 +57,8 @@ class SimplePieModx {
      */
     public $spie = null;
 
+    private $_error;
+
     /**
      * Initiating MODx's object inside the class
      * @param mixed $modx  MODx's object
@@ -225,7 +227,9 @@ class SimplePieModx {
         } else {
             $res['suc'] = $this->_filterModxTags($phArray);
         }
-
+        if ($feed->error()) {
+            $this->_error = $feed->error();
+        }
         return $res;
     }
 
@@ -236,6 +240,9 @@ class SimplePieModx {
      * @link http://simplepie.org/wiki/reference/simplepie/enable_order_by_date
      */
     public function sortPlaceholders($phs) {
+        if (empty($phs)) {
+            return FALSE;
+        }
         $sortByArray = array();
         foreach ($phs as $k => $v) {
             if ('date' == strtolower($this->spie['sortBy'])) {
@@ -350,4 +357,7 @@ class SimplePieModx {
         return $sources;
     }
 
+    public function getError() {
+        return $this->_error;
+    }
 }

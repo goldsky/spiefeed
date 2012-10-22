@@ -267,10 +267,18 @@ $simplePieModx = new SimplePieModx($modx);
 $simplePieModx->setConfigs($scriptProperties);
 $phs = $simplePieModx->getPlaceholders();
 
+$error = $simplePieModx->getError();
+if (!empty($error)) {
+    $modx->log(modX::LOG_LEVEL_ERROR, '[spieFeed] ' . $error);
+}
+
 if (!empty($phs['err'])) {
     echo $phs['err'];
 } else {
     $feeds = $simplePieModx->sortPlaceholders($phs['suc']);
+    if ($feeds === false) {
+        return '';
+    }
     if (!empty($toArray)) {
         echo '<pre>' . print_r($feeds, 1) . '</pre>';
     } else {
