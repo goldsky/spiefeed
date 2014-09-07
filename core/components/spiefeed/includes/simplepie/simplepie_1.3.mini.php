@@ -8768,8 +8768,12 @@ class SimplePie_Misc
 
 	public static function absolutize_url($relative, $base)
 	{
-		$iri = SimplePie_IRI::absolutize(new SimplePie_IRI($base), $relative);
-		return $iri->get_uri();
+    	$iri = SimplePie_IRI::absolutize(new SimplePie_IRI($base), $relative);
+    		if ( is_object( $iri ) )
+        		return $iri->get_uri();
+    		else {
+        		return FALSE;
+    		}
 	}
 	public static function get_element($realname, $string)
 	{
