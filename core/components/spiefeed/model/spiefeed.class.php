@@ -213,7 +213,7 @@ class SimplePieModx {
 
                 // Media from Flickr RSS stream
                 if ($enclosure = $item->get_enclosure()) {
-                    $phArray[$joinKey]['itemImageThumbnailUrl'] = $enclosure->get_thumbnail();
+                    $phArray[$joinKey]['itemImageThumbnailUrl'] = $enclosure->get_link();
                     $phArray[$joinKey]['itemImageWidth'] = $enclosure->get_width();
                     $phArray[$joinKey]['itemImageHeight'] = $enclosure->get_height();
                 }
