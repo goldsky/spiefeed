@@ -40,7 +40,7 @@
  */
 
 /**
- * @author goldsky <goldsky@modx-id.com>
+ * @author goldsky <goldsky@virtudraft.com>
  * @license http://www.gnu.org/licenses/gpl-3.0.html
  * @package spieFeed
  * @subpackage class
