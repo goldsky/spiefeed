@@ -53,7 +53,7 @@ set_time_limit(0);
 /* define version */
 define('PKG_NAME', 'spieFeed');
 define('PKG_NAME_LOWER', 'spiefeed');
-define('PKG_VERSION', '1.6.1');
+define('PKG_VERSION', '1.6.2');
 define('PKG_RELEASE', 'pl');
 
 /* override with your own defines here (see build.config.sample.php) */
