@@ -161,8 +161,8 @@ $scriptProperties['stripComments'] = $modx->getOption('stripComments', $scriptPr
  * This way, you can modify the existing list without having to create a whole new one.
  * @link http://simplepie.org/wiki/reference/simplepie/strip_htmltags
  */
-$scriptProperties['stripHtmlTags'] = array();
 $stripHtmlTags = $modx->getOption('stripHtmlTags', $scriptProperties);
+$scriptProperties['stripHtmlTags'] = array();
 if (!empty($stripHtmlTags)) {
     $scriptProperties['stripHtmlTags'] = @explode(',', $stripHtmlTags);
     foreach ($scriptProperties['stripHtmlTags'] as $k => $v) {
