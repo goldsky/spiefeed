@@ -198,8 +198,13 @@ $scriptProperties['getItemLength'] = $modx->getOption('getItemLength', $scriptPr
  * This config option will force SimplePie to use fsockopen even if cURL is installed.
  * @link http://simplepie.org/wiki/reference/simplepie/force_fsockopen
  */
-$scriptProperties['forceFSockopen'] = !empty($scriptProperties['forceFSockopen']) && $scriptProperties['forceFSockopen'] == '0' ? 0 : 1;
-$scriptProperties['forceFSockopen'] = $modx->getOption('forceFSockopen', $scriptProperties);
+$scriptProperties['forceFSockopen'] = $modx->getOption(
+    'forceFSockopen',
+    $scriptProperties,
+    true
+);
+$scriptProperties['forceFSockopen']
+    = $scriptProperties['forceFSockopen'] != '0';
 
 /**
  * Allows you to override the character encoding of the feed.
